@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>util</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        button{
+            display: block;
+            margin-bottom:.5em;
+            border:0;
+            outline:0;
+            background-color:red;
+            padding:1em;
+            color:white;
+        }
+    </style>
+    <script src="../lib/util.js"></script>
+</head>
+<body>
+<button onclick="util.getURLParam()">getURLParam</button>
+<button onclick="util.addScript('../os.js',function(){console.log('complete')})">addScript</button>
+</body>
+</html>
