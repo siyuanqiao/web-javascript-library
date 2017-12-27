@@ -54,6 +54,8 @@
             p.scale.set(scale+0.2);
 
             var angle=(Math.random()*360);
+            //正弦 0-90-180-270-360
+            //   (0 1  0  1     0)
             p.x = Math.sin(Math.PI/180*angle)*(Math.random()*randiusX);
             p.y = Math.cos(Math.PI/180*angle)*(Math.random()*randiusY);
 
