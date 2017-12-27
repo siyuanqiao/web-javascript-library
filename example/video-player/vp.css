@@ -1,0 +1,124 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+
+.video-player-wrap {
+  position: relative;
+  width: 100%;
+  height: auto;
+  font-family: Arial,sans-serif; }
+
+.player_tips {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 8;
+  width: 100%;
+  height: 100%; }
+  .player_tips .player_play_btn {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    margin-left: -25px;
+    margin-top: -25px;
+    background: #000 url("img/playing.png") no-repeat center center; }
+  .player_tips .player_waiting {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    display: none;
+    width: 50px;
+    height: 50px;
+    margin-left: -25px;
+    margin-top: -25px;
+    background: #000 url("img/waiting.png") no-repeat center center; }
+  .player_tips .player_warning {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    display: none;
+    width: 90px;
+    height: 130px;
+    margin-left: -45px;
+    margin-top: -65px; }
+  .player_tips .player_ended {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 4;
+    display: none;
+    width: 50px;
+    height: 50px;
+    margin-left: -25px;
+    margin-top: -25px;
+    background: #000 url("img/ended.png") no-repeat center center; }
+
+.player-controls {
+  position: absolute;
+  left: 0;
+  z-index: 9;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  font-size: 10px;
+  color: white;
+  line-height: 40px; }
+  .player-controls .controls-left {
+    float: left;
+    width: 100px;
+    text-align: center; }
+  .player-controls .controls-right {
+    float: right;
+    width: 100px;
+    text-align: center; }
+  .player-controls .process-bar {
+    position: relative;
+    top: 19px;
+    z-index: 20;
+    min-height: 3px;
+    margin-left: 100px;
+    margin-right: 100px; }
+    .player-controls .process-bar .process-bg {
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      left: 0;
+      background-color: #141414; }
+    .player-controls .process-bar .process-buffer {
+      position: absolute;
+      height: 3px;
+      width: 0;
+      left: 0;
+      background-color: #2c2c2c; }
+    .player-controls .process-bar .process-line {
+      position: absolute;
+      height: 3px;
+      width: 0;
+      left: 0;
+      background-color: #9b9b9b; }
+
+.togg-btn {
+  border: 0;
+  outline: 0;
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto; }
+
+.playing {
+  background-image: url("img/playing.png"); }
+
+.paused {
+  background-image: url("img/paused.png"); }
+
+/*# sourceMappingURL=vp.css.map */

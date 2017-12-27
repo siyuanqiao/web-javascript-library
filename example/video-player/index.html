@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>VideoPlayer</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" id="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="stylesheet" href="vp.css">
+    </head>
+    <body>
+
+    <div class="video-player-wrap" id="video_wrap">
+        <div class="video-wrap">
+            <video id="video" width="100%"  preload="auto" poster="" src=""
+                   webkit-playsinline="true"
+                   x-webkit-airplay="true"
+                   x5-video-player-type="h5"
+                   playsinline>
+            </video>
+        </div>
+        <div class="player_tips">
+            <div class="player_play_btn"></div>
+            <div class="player_waiting"></div>
+            <div class="player_warning"></div>
+            <div class="player_ended"></div>
+        </div>
+        <div class="player-controls">
+            <div class="controls-left">
+                <button class="togg-btn playing">&nbsp;</button>
+                <span class="time-current" style="">00:00</span>
+            </div>
+            <div class="controls-right">
+                <span class="time-duration">00:00</span>
+            </div>
+            <div class="process-bar">
+                <div class="process-bg"></div>
+                <div class="process-buffer"></div>
+                <div class="process-line"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="VideoPlayer.js"></script>
+    <script>
+        var player = new VideoPlayer({
+            el:"#video_wrap",
+            url:'//videos.akqa.com/work/nike/nba-connected-jersey/film.mp4'
+        });
+    </script>
+
+    </body>
+</html>

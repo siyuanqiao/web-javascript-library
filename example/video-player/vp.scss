@@ -1,0 +1,136 @@
+*{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+
+@mixin pst($p,$l:false,$t:false,$z:false){
+  position:$p;
+  @if $l{
+    left:$l;
+  }
+  @if $t{
+    top:$t;
+  }
+  @if $z{
+    z-index:$z;
+  }
+}
+@mixin box($dis:block,$w:false,$h:false){
+  @if $dis!=block{
+    display: $dis;
+  }
+  @if $w{
+    width:$w;
+  }
+  @if $h{
+    height:$h;
+  }
+}
+
+.video-player-wrap{
+  position:relative;
+  width:100%;
+  height:auto;
+  font-family: Arial,sans-serif;
+}
+
+.player_tips{
+  @include pst(absolute,0,0,8);
+  @include box(block,100%,100%);
+
+  .player_play_btn{
+    @include pst(absolute,50%,50%,1);
+    @include box(block,50px,50px);
+    margin-left:-25px;
+    margin-top:-25px;
+    background:#000 url('img/playing.png') no-repeat center center;
+  }
+  .player_waiting{
+    @include pst(absolute,50%,50%,2);
+    @include box(none,50px,50px);
+    margin-left:-25px;
+    margin-top:-25px;
+    background:#000 url('img/waiting.png') no-repeat center center;
+  }
+  .player_warning{
+    @include pst(absolute,50%,50%,3);
+    @include box(none,90px,130px);
+    margin-left:-45px;
+    margin-top:-65px;
+    //background:#000 url('img/playerIcons.png') no-repeat center center;
+  }
+  .player_ended{
+    @include pst(absolute,50%,50%,4);
+    @include box(none,50px,50px);
+    margin-left:-25px;
+    margin-top:-25px;
+    background:#000 url('img/ended.png') no-repeat center center;
+  }
+}
+.player-controls{
+  @include pst(absolute,0,false,9);
+  bottom: 0;
+  width:100%;
+  //padding:25px 0;
+  background-color:black;
+  font-size: 10px;
+  color: white;
+  line-height:40px;
+
+  .controls-left{
+    float: left;
+    width:100px;
+    //border:1px solid red;
+    text-align: center;
+  }
+  .controls-right{
+    float: right;
+    width:100px;
+    //border:1px solid red;
+    text-align: center;
+  }
+  .process-bar{
+    position:relative;
+    top:19px;
+    z-index:20;
+    min-height:3px;
+    margin-left:100px;
+    margin-right:100px;
+    //border:1px solid blue;
+
+    .process-bg{
+      position:absolute;height:3px;width:100%;left:0;background-color:#141414;
+    }
+    .process-buffer{
+      position:absolute;height:3px;width:0;left:0;background-color:#2c2c2c;
+    }
+    .process-line{
+      position:absolute;height:3px;width:0;left:0;background-color:#9b9b9b;
+    }
+  }
+}
+
+
+
+.togg-btn{
+  //border:1px solid red;
+  border:0;
+  outline:0;
+  width:25px;
+  height:25px;
+  //margin-left:30px;
+  //margin-right:5px;
+  background-color:transparent;
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:auto;
+}
+.playing{
+  background-image:url('img/playing.png');
+}
+.paused{
+  background-image:url('img/paused.png');
+}
