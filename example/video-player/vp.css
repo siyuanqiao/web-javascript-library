@@ -105,9 +105,12 @@
       left: 0;
       background-color: #9b9b9b; }
 
-.togg-btn {
+button {
   border: 0;
   outline: 0;
+  cursor: pointer; }
+
+.togg-btn, .mute {
   width: 25px;
   height: 25px;
   background-color: transparent;
@@ -120,5 +123,11 @@
 
 .paused {
   background-image: url("img/paused.png"); }
+
+.mute-off {
+  background-image: url("img/mute_off.png"); }
+
+.mute-on {
+  background-image: url("img/mute_on.png"); }
 
 /*# sourceMappingURL=vp.css.map */

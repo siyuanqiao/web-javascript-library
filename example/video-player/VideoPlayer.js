@@ -4,7 +4,7 @@ var VideoPlayer = function(params) {
     this._dom = $(params.el);
     this._video = this._dom.find("video")[0];
     this._video.src = params.url;
-    this._video.volume=0;
+    // this._video.volume=0;
 
     //skin
     this._skin = new Skin(this._video, this._dom[0]);
@@ -16,6 +16,7 @@ var Skin = function(_v, _d) {
     var scope = this;
 
     this._onState = null;
+    this._onMute=false;
 
     this._video = _v;
     this._dom = _d;
@@ -57,6 +58,11 @@ var Skin = function(_v, _d) {
             var ct=n*d;
             console.log(offsetX,barWidth,n,ct,d);
             scope.seek(ct);
+        });
+        //静音按钮
+        document.querySelector(".mute").addEventListener('click',function(e){
+            e.stopPropagation();
+            scope.onMute=!scope.onMute;
         });
     }
 
@@ -151,6 +157,17 @@ var Skin = function(_v, _d) {
 
 };
 Skin.prototype = {
+    set onMute(value){
+      this._onMute=value;
+      if(value)
+          this._video.muted=true;
+      else
+          this._video.muted=false;
+      $('.mute').toggleClass('mute-off mute-on');
+    },
+    get onMute(){
+        return this._onMute;
+    },
     set onState(value){
         this._onState=value;
         if(value=='waiting'){

@@ -26,11 +26,12 @@
         </div>
         <div class="player-controls">
             <div class="controls-left">
-                <button class="togg-btn playing">&nbsp;</button>
+                <button class="togg-btn playing">&nbsp;</button>&nbsp;
                 <span class="time-current" style="">00:00</span>
             </div>
             <div class="controls-right">
-                <span class="time-duration">00:00</span>
+                <span class="time-duration">00:00</span>&nbsp;
+                <button class="mute mute-off">&nbsp;</button>
             </div>
             <div class="process-bar">
                 <div class="process-bg"></div>
@@ -41,7 +42,7 @@
         </div>
     </div>
 
-    <script src="jquery-3.1.1.min.js"></script>
+    <script src="../libs/jquery/jquery-3.1.1.min.js"></script>
     <script src="VideoPlayer.js"></script>
     <script>
         var player = new VideoPlayer({

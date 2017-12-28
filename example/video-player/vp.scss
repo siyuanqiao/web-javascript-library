@@ -83,13 +83,11 @@
   .controls-left{
     float: left;
     width:100px;
-    //border:1px solid red;
     text-align: center;
   }
   .controls-right{
     float: right;
     width:100px;
-    //border:1px solid red;
     text-align: center;
   }
   .process-bar{
@@ -113,16 +111,16 @@
   }
 }
 
-
-
-.togg-btn{
-  //border:1px solid red;
+button{
   border:0;
   outline:0;
+  cursor: pointer;
+}
+
+.togg-btn,.mute{
+  //border:1px solid red;
   width:25px;
   height:25px;
-  //margin-left:30px;
-  //margin-right:5px;
   background-color:transparent;
   background-repeat:no-repeat;
   background-position: center;
@@ -133,4 +131,10 @@
 }
 .paused{
   background-image:url('img/paused.png');
+}
+.mute-off{
+  background-image:url('img/mute_off.png');
+}
+.mute-on{
+  background-image:url('img/mute_on.png');
 }
