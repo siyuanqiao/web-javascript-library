@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>util</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			div {
+				float: left;
+			}
+			
+			button {
+				display: block;
+				margin-bottom: .5em;
+				margin-left: .5em;
+				border: 0;
+				outline: 0;
+				background-color: red;
+				padding: 1em;
+				color: white;
+				float: left;
+			}
+			
+			input {
+				float: left;
+				padding: 1em;
+			}
+			
+			.clear {
+				clear: both;
+			}
+		</style>
+		<script src="../lib/math.js"></script>
+	</head>
+
+	<body>
+		<div>p1:{x:0,y:0} , p2:{x:100,y:100} <span id="test1"></span></div><button onclick="distance()">计算两点间距离</button>
+		<div class="clear"></div>
+
+		<div>p1:{x:0,y:0} , p2:{x:100,y:100} , 已知y坐标：20 <span id="test2"></span></div><button onclick="getXY()">计算两点间任意点的坐标</button>
+		<div class="clear"></div>
+
+		<div>p1:{x:0,y:0} , p2:{x:100,y:100} <span id="test3"></span></div><button onclick="getCenter()">计算两点间直线中心点坐标</button>
+		<div class="clear"></div>
+
+		<input id="inputStr" /><button onclick="cutStr()">每隔三位加一个逗号</button>
+		<div class="clear"></div>
+
+		<div>1.32131423432</div><button onclick="getFloat()">四舍五入，保留2位小数</button>
+		<div class="clear"></div>
+
+		<script>
+			function distance() {
+				var p1 = {
+					x: 0,
+					y: 0
+				};
+				var p2 = {
+					x: 100,
+					y: 100
+				};
+				var temp = math.getDistance(p1, p2);
+				document.getElementById('test1').innerHTML = '距离：' + temp;
+			}
+
+			function getXY() {
+				var p1 = {
+					x: 0,
+					y: 0
+				};
+				var p2 = {
+					x: 100,
+					y: 100
+				};
+				var _y = 20;
+				var temp = math.getOnLineXY(p1, p2, null, _y);
+				document.getElementById('test2').innerHTML = '任意点坐标：x:' + temp.x + ',y:' + temp.y;
+			}
+
+			function getCenter() {
+				var p1 = {
+					x: 0,
+					y: 0
+				};
+				var p2 = {
+					x: 100,
+					y: 100
+				};
+				var temp = math.getOnLineCenter(p1, p2);
+				document.getElementById('test3').innerHTML = '中心点坐标：x:' + temp.x + ',y:' + temp.y;
+			}
+
+			function cutStr() {
+				var __str = document.getElementById('inputStr').value;
+				var __str2 = math.cutStr(__str);
+				alert(__str2);
+			}
+
+			function getFloat() {
+				var num = 1.32131423432;
+				var num2 = math.getFloat(num, 2);
+				alert(num2);
+			}
+		</script>
+	</body>
+
+</html>
