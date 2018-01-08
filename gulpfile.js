@@ -2,11 +2,11 @@ var gulp=require('gulp'),
     concat=require('gulp-concat');
 
 gulp.task('css',function(){
-   console.log('css complete');
+   //console.log('css complete');
 });
 
 gulp.task('js',function(){
-   console.log('js complete');
+   //console.log('js complete');
 
    gulp.src('lib/*.js')
        .pipe(concat('common.js'))
@@ -15,5 +15,5 @@ gulp.task('js',function(){
 
 
 gulp.task('default',['css','js'],function(){
-   console.log('test');
+   //console.log('test');
 });
