@@ -7,4 +7,4 @@ os.js       -->解析系统相关信息
 
 url.js      -->解析URL地址相关信息
 
-util.js     -->功能库
+utils.js     -->功能库

@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>util</title>
+		<title>stringutils</title>
 		<style>
 			* {
 				margin: 0;
@@ -31,7 +31,7 @@
 				clear: both;
 			}
 		</style>
-		<script src="../lib/string.js"></script>
+		<script src="../lib/stringutils.js"></script>
 	</head>
 
 	<body>
@@ -52,38 +52,38 @@
 			function trim() {
 				var __str = '  去掉左右空格  ';
 				console.log('去掉前:::' + __str);
-				__str = string.trim(__str);
+				__str = stringutils.trim(__str);
 				console.log('去掉后:::' + __str);
 			}
 
 			function empty() {
 				var __str = document.getElementById('inputStr').value;
-				alert(string.isEmpty(__str));
+				alert(stringutils.isEmpty(__str));
 			}
 
 			function phone() {
 				var __str = document.getElementById('inputPhone').value;
-				alert(string.isMobile(__str));
+				alert(stringutils.isMobile(__str));
 			}
 
 			function leftPad() {
 				var __str = document.getElementById('inputA').value;
 				var __str2 = document.getElementById('inputB').value;
-				var __str3 = string.leftpad(__str, 2, __str2);
+				var __str3 = stringutils.leftpad(__str, 2, __str2);
 				alert(__str3);
 			}
 			
 			function insert(){
 				var __str = document.getElementById('inputA2').value;
 				var __str2 = document.getElementById('inputB2').value;
-				var __str3 = string.insert_flg(__str, __str2, 2);
+				var __str3 = stringutils.insert_flg(__str, __str2, 2);
 				alert(__str3);
 			}
 			
 			function del(){
 				var __str = document.getElementById('inputA3').value;
 				var __str2 = document.getElementById('inputB3').value;
-				var __str3 = string.del_flg(__str,__str2);
+				var __str3 = stringutils.del_flg(__str,__str2);
 				alert(__str3);
 			}
 		</script>
