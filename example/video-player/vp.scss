@@ -36,7 +36,9 @@
   height:auto;
   font-family: Arial,sans-serif;
 }
-
+.show{
+  display: block !important;
+}
 .player_tips{
   @include pst(absolute,0,0,8);
   @include box(block,100%,100%);
@@ -53,7 +55,17 @@
     @include box(none,50px,50px);
     margin-left:-25px;
     margin-top:-25px;
-    background:#000 url('img/waiting.png') no-repeat center center;
+    background-color:white;
+    text-align: center;
+    line-height:50px;
+    vertical-align: middle;
+    background-color:#000;
+    //background:#000 url('img/waiting.png') no-repeat center center;
+    img{
+      margin-top:10px;
+      -webkit-animation:rotate 3s linear 0s infinite;
+      animation:rotate 2s linear 0s infinite;
+    }
   }
   .player_warning{
     @include pst(absolute,50%,50%,3);
@@ -137,4 +149,14 @@ button{
 }
 .mute-on{
   background-image:url('img/mute_on.png');
+}
+
+
+@keyframes rotate {
+  0%{
+    -webkit-transform:rotate(0deg);
+  }
+  100%{
+    -webkit-transform:rotate(360deg);
+  }
 }

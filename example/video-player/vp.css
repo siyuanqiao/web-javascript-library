@@ -11,6 +11,9 @@
   height: auto;
   font-family: Arial,sans-serif; }
 
+.show {
+  display: block !important; }
+
 .player_tips {
   position: absolute;
   left: 0;
@@ -38,7 +41,15 @@
     height: 50px;
     margin-left: -25px;
     margin-top: -25px;
-    background: #000 url("img/waiting.png") no-repeat center center; }
+    background-color: white;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+    background-color: #000; }
+    .player_tips .player_waiting img {
+      margin-top: 10px;
+      -webkit-animation: rotate 3s linear 0s infinite;
+      animation: rotate 2s linear 0s infinite; }
   .player_tips .player_warning {
     position: absolute;
     left: 50%;
@@ -129,5 +140,11 @@ button {
 
 .mute-on {
   background-image: url("img/mute_on.png"); }
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg); } }
 
 /*# sourceMappingURL=vp.css.map */
