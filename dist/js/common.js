@@ -1,59 +1,3 @@
-function ajax(options){
-
-}
-
-/*
- * 数组相关功能
- */
-(function() {
-	/**
-	 * 洗牌算法 打乱数组
-	 * @return 打乱后的数组
-	 * */
-    Array.prototype.shuffle=function(){
-        var i,t,m=this.length;
-        while(m){
-            i=Math.floor(Math.random()*m--);
-            t=this[m];
-            this[m]=this[i];
-            this[i]=t;
-        }
-        return this;
-    }
-
-	/**
-	 * 获取数组中最小的值
-	 * */
-    Array.prototype.getMin= function() {
-    	var arr=this;
-        var min = arr[0];
-        for(var i = 1; i < arr.length; i++) {
-            if(min > arr[i]) {
-                min = arr[i];
-            }
-        }
-        return min;
-    },
-
-	/**
-	 * 获取数组中最大的值
-	 * */
-	Array.prototype.getMax= function() {
-    	var arr=this;
-        var max = arr[0];
-        for(var i = 1; i < arr.length; i++) {
-            if(max < arr[i]) {
-                max = arr[i];
-            }
-        }
-        return max;
-    }
-
-    var arrayutils = {}
-
-	window.arrayutils = arrayutils;
-}());
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 //  ADOBE SYSTEMS INCORPORATED
@@ -164,332 +108,6 @@ function getData(str){
     data.setTime(data.valueOf()+time);
     return data;
 }
-
-/*
- * 数学相关的功能
- */
-(function() {
-	var mathutils = {
-		/**
-		 * 计算两点间距离
-		 * @param {object} [p1] 点1
-		 * @param {object} [p2] 点2
-		 * */
-		getDistance: function(p1, p2) {
-			var a = p2.x - p1.x;
-			var b = p2.y - p1.y;
-			var n = Math.sqrt(a * a + b * b);
-			return n;
-		},
-
-		/**
-		 * 计算两点间直线任意点的坐标，p1 p2为直线的两个端点，_x和_y为要求的坐标点中的一个坐标，求另一个
-		 * @param {object} [p1] 点1
-		 * @param {object} [p2] 点2
-		 * @param {number} [_x] 要求的点的x坐标，求x坐标的话，该参数填null
-		 * @param {number} [_y] 要求的点的y坐标，求x坐标的话，该参数填null
-		 * */
-		getOnLineXY: function(p1, p2, _x, _y) {
-			var k = (p2.y - p1.y) / (p2.x - p1.x);
-			var b = p1.y - k * (p1.x);
-			if(_x == null) {
-				_x = (_y - b) / k;
-			} else if(_y == null) {
-				_y = k * _x + b;
-			}
-			var p = {
-				x: _x,
-				y: _y
-			};
-			return p;
-		},
-
-		/**
-		 * 计算两点间直线中心点坐标
-		 * @param {object} [p1] 点1
-		 * @param {object} [p2] 点2
-		 * */
-		getOnLineCenter: function(p1, p2) {
-			var xx = (p1.x + p2.x) / 2;
-			var yy = (p1.y + p1.y) / 2;
-			var p = {
-				x: xx,
-				y: yy
-			};
-			return p;
-		},
-
-		/**
-		 * 返回起点到终点的角度
-		 * @param {object} [start] 起点
-		 * @param {object} [end] 终点
-		 * */
-		Cangle: function(start, end) {
-			var diff_x = end.x - start.x,
-				diff_y = end.y - start.y;
-			//返回角度,不是弧度
-			return 360 * Math.atan(diff_y / diff_x) / (2 * Math.PI);
-		},
-
-		/**
-		 * 每隔三位数加一个逗号
-		 * @param {string/number} [value] 要转换的值
-		 * */
-		cutStr: function(value) {
-			var temp = parseFloat(value).toLocaleString();
-			return temp;
-		},
-
-		/**
-		 * 获取椭圆内随机一点
-		 * @param {number} radiusX 椭圆X轴半径
-		 * @param {number} radiusY 椭圆Y轴半径
-		 * @param {object} 随机点
-		 * */
-        getEllipseRandomPoint:function(radiusX,radiusY){
-            var angle=(Math.random()*360);
-            //正弦函数图像特点 x∈[0,2π] 5点观察值[0,1, 0,-1,0]
-            //余弦函数图像特点 x∈[0,2π] 5点观察值[1,0,-1, 0,1]
-            return {
-            	x:Math.sin(Math.PI/180*angle)*(Math.random()*randiusX),
-				y:Math.cos(Math.PI/180*angle)*(Math.random()*randiusY)
-			}
-        },
-
-        /**
-		 * 计算斐波那契数列 递归
-         */
-        fbnq:function(n){
-			if(n==1||n==2){
-				return 1;
-			}
-			return Math.fbnq(n-1)+Math.fbnq(n-2);
-		},
-
-        /**
-         * 计算斐波那契数列 非递归
-         */
-		fbnq2:function(n){
-            var a,b,res;
-            a = b = 1;
-            for(var i=3;i<=n;i++){
-                res = a + b;
-                a = b;
-                b = res;
-            }
-            return res;
-		}
-	};
-
-	Object.assign(Math,mathutils);
-}());
-/**
- * 数字值相关功能
- * 遵循mozilla的规则：扩展内置原型的唯一理由是支持JavaScript 引擎的新特性，如Array.forEach。
- */
-
-(function(){
-
-    /**
-     * 数字四舍五入（保留n位小数）
-     * @param {number} [number] 要四舍五入的数字
-     * @param {number} [n] 保留的位数
-     * */
-    Number.prototype.getFloat=function(number, n) {
-        n = n ? parseInt(n) : 0;
-        if(n <= 0) return Math.round(number);
-        number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n);
-        return number;
-    }
-
-    /*
-     * 将数字转成数组
-     * */
-    Number.prototype.getNumToArray=function(number) {
-        var aa;
-        if(number < 10) {
-            aa = '0' + number;
-        } else {
-            aa = number.toString();
-        }
-
-        var arr = aa.split("");
-        return arr;
-    }
-}());
-(function(){
-    var userAgent=window.navigator.userAgent;
-    var find=function(needle){
-        return userAgent.indexOf(needle) !== -1;
-    }
-    var os={};
-    os.iphone=find('iphone');
-    os.ipod=find('ipod');
-    os.ipad=find('ipad');
-    os.ios=os.iphone || os.ipod || os.ipad;
-
-    window.os=os;
-}());
-
-
-/**
- * 字符相关功能
- * 遵循mozilla的规则：扩展内置原型的唯一理由是支持JavaScript 引擎的新特性，如Array.forEach。
- */
-
-
-(function() {
-	//扩展内置String对象
-	var sp=String.prototype;
-
-	/**
-	 * 删除字符串两端的空白字符。
-	 * @return 返回的是一个新的字符串
-	 * */
-	if(!sp.trim){
-		sp.trim=function(){
-            return this.replace(/(^\s*)|(\s*$)/g, "");
-		}
-	}
-
-	/**
-	 * 去除左空格
-	 * */
-	if(!sp.ltrim){sp.ltrim=function(){return this.replace(/(^\s*)/g,"");}}
-
-	/**
-	 * 去除右空格
-	 * */
-	if(!sp.rtrim)sp.rtrim=function(){return this.replace(/(\s*$)/g,"");}
-
-	/**
-	 * 判断是否为空字符
-	 * */
-	sp.isEmpty=function(value) {
-        var __temp = this.trim(value);
-        return __temp.length == 0;
-    }
-
-	/**
-	 * 在指定地方插入字符
-	 * @param {string} flg 要插入的字符串
-	 * @param {number} sn 要插入的位置
-	 * */
-    sp.insert_flg=function(flg, sn) {
-        var newstr = "";
-        var a = this.slice(0, sn);
-        var b = this.slice(sn);
-        newstr = a + flg + b;
-        return newstr;
-    }
-
-	/**
-	 * 删除指定地方的字符
-	 * @param {number} sn 要删除的位置
-	 * @param {number} len 删除字符的长度
-	 * */
-    sp.del_flg=function(sn,len) {
-    	len=len||1;
-        var newstr = "";
-        var arr = this.split('');
-        arr.splice(sn - 1, len);
-        newstr = arr.join("");
-        return newstr;
-    }
-
-
-	var stringutils = {
-
-		/*
-		 * 判断就否为手机号码
-		 * */
-		isMobile: function(value) {
-			var __temp = this.trim(value);
-			var p = /^0*(13|14|15|16|17|18)\d{9}$/;
-			return p.test(__temp);
-		},
-		/*
-		 * 将字符串中的指定字符全部替换成另一个字符
-		 * str:整个字符串
-		 * a:要被替换的字符
-		 * b:替换成这个字符
-		 * mm:匹配模式，如下:
-		 * 	g:全局匹配
-			i:区分大小写
-			m:多行匹配
-		 * */
-		strReplace: function(str, a, b, mm) {
-			if(m == null) {
-				m = '';
-			}
-			var cc = str.replace(new RegExp(a, mm), b);
-			return cc;
-		},
-		/*
-		 * 补位，给指定字符串前面补位，用指定的字符补位，默认为空格
-		 * str:指定字符
-		 * len:补几位
-		 * ch:补什么字符
-		 * */
-		leftpad: function(str, len, ch) {
-			str = String(str);
-			var i = -1;
-			if(!ch && ch !== 0) ch = ' ';
-			while(++i < len) {
-				str = ch + str;
-			}
-			return str;
-		},
-		/*
-		 * 随机A-Z|a-z|0-9 中的随机组合
-		 * @param {number} 随机组合的长度
-		 * @return {string} 随机组合的字符
-		 * */
-        randomString:function(len){
-            len=len || 32;
-            var $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
-                ,maxPos = $chars.length
-                ,i = 0
-                ,pwd = '';
-            for (i; i < len; i++) {
-                pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-            }
-            return pwd;
-        },
-	};
-	window.stringutils = stringutils;
-}());
-(function(){
-    var url={
-        /*
-        * 获取URL参数
-        * @retrun
-        * */
-        getParam:function(){
-            var qs=window.location.search.length>0?location.search.substring(1):'';
-            //参数对象
-            var ags={};
-            var items=qs.split('&');
-            var item=null;
-            for(var i=0,len=items.length;i<len;i++){
-                item=items[i].split("=");
-                var key=decodeURIComponent(item[0]);
-                var val=decodeURIComponent(item[1]);
-                ags[key]=val;
-            }
-            return ags;
-        },
-        /*
-        * 查询是否有某个参数
-        * @param {string} [name] 参数名称
-        * @return {string|undefined}
-        * */
-        queryString:function(name){
-            return url.getParam()[name];
-        }
-    }
-    window.url=url;
-}());
 
 (function(){
     var util={
@@ -619,4 +237,478 @@ function getData(str){
         }
     };
     window.util=util;
+}());
+
+(function(){
+    var userAgent=window.navigator.userAgent;
+    var find=function(needle){
+        return userAgent.indexOf(needle) !== -1;
+    }
+    var os={};
+    os.iphone=find('iphone');
+    os.ipod=find('ipod');
+    os.ipad=find('ipad');
+    os.ios=os.iphone || os.ipod || os.ipad;
+
+    os.android=find('Android');
+
+    //华为手机
+    os.isHuaWei=find('HUAWEI');
+
+    //微信APP终端
+    os.weChat=find('MicroMessenger');
+
+    //高德APP终端
+    os.amap=find('amap');
+
+    //是否是移动端(网络抄取，待优化！！！)
+    os.isMobile=userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+
+    window.os=os;
+}());
+
+/**
+ * 数字值相关功能
+ * 遵循mozilla的规则：扩展内置原型的唯一理由是支持JavaScript 引擎的新特性，如Array.forEach。
+ */
+
+(function(){
+
+    /**
+     * 数字四舍五入（保留n位小数）
+     * @param {number} [number] 要四舍五入的数字
+     * @param {number} [n] 保留的位数
+     * */
+    Number.prototype.getFloat=function(number, n) {
+        n = n ? parseInt(n) : 0;
+        if(n <= 0) return Math.round(number);
+        number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n);
+        return number;
+    }
+
+    /*
+     * 将数字转成数组
+     * */
+    Number.prototype.getNumToArray=function(number) {
+        var aa;
+        if(number < 10) {
+            aa = '0' + number;
+        } else {
+            aa = number.toString();
+        }
+
+        var arr = aa.split("");
+        return arr;
+    }
+}());
+/**
+ * 字符相关功能
+ * 遵循mozilla的规则：扩展内置原型的唯一理由是支持JavaScript 引擎的新特性，如Array.forEach。
+ */
+
+(function() {
+	//扩展内置String对象
+	var sp=String.prototype;
+
+	/**
+	 * 删除字符串两端的空白字符。
+	 * @return 返回的是一个新的字符串
+	 * */
+	if(!sp.trim){
+		sp.trim=function(){
+            return this.replace(/(^\s*)|(\s*$)/g, "");
+		}
+	}
+
+	/**
+	 * 去除左空格
+	 * */
+	if(!sp.ltrim){sp.ltrim=function(){return this.replace(/(^\s*)/g,"");}}
+
+	/**
+	 * 去除右空格
+	 * */
+	if(!sp.rtrim)sp.rtrim=function(){return this.replace(/(\s*$)/g,"");}
+
+	/**
+	 * 判断是否为空字符
+	 * */
+	sp.isEmpty=function(value) {
+        var __temp = this.trim(value);
+        return __temp.length == 0;
+    }
+
+	/**
+	 * 在指定地方插入字符
+	 * @param {string} flg 要插入的字符串
+	 * @param {number} sn 要插入的位置
+	 * */
+    sp.insert_flg=function(flg, sn) {
+        var newstr = "";
+        var a = this.slice(0, sn);
+        var b = this.slice(sn);
+        newstr = a + flg + b;
+        return newstr;
+    }
+
+	/**
+	 * 删除指定地方的字符
+	 * @param {number} sn 要删除的位置
+	 * @param {number} len 删除字符的长度
+	 * */
+    sp.del_flg=function(sn,len) {
+    	len=len||1;
+        var newstr = "";
+        var arr = this.split('');
+        arr.splice(sn - 1, len);
+        newstr = arr.join("");
+        return newstr;
+    }
+
+    /**
+     * 解析url,待实现！！！！
+     * @return
+     * */
+    sp.urlParse=function(){
+		//http://180.ai?a=1&b=2#tech
+		return {
+            protocol: 'http:',
+            slashes: true,
+            auth: null,
+            host: '180.ai',
+            port: null,
+            hostname: '180.ai',
+            hash: '#tech',
+            search: '?a=1&b=2',
+            query: 'a=1&b=2',
+            pathname: '/',
+            path: '/?a=1&b=2',
+            href: 'http://180.ai/?a=1&b=2#tech'
+		}
+	}
+
+	/** 
+	 * 获取URL参数
+	 * @example
+	 * window.loaction.search.getURLParam();
+	 *
+	 * @retrun {}
+	 * */
+    sp.getQuerystring=function(){
+        //返回的参数对象
+        var ags={};
+        if(this.length>1){
+            var query=this.substring(1);
+            var items=query.split('&');
+            var item=null;
+            for(var i=0,len=items.length;i<len;i++){
+                item=items[i].split("=");
+                var key=decodeURIComponent(item[0]);
+                var val=decodeURIComponent(item[1]);
+                ags[key]=val;
+            }
+		}
+        return ags;
+    }
+
+	/**
+	 * 随机A-Z|a-z|0-9 中的随机组合
+	 * @param {number} 随机组合的长度
+	 *
+	 * @example
+	 * String.prototype.randomString(); & ''.randomString();
+	 *
+	 * @return {string} 随机组合的字符
+	 * */
+    sp.randomString=function(len){
+        len=len || 32;
+        var $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
+            ,maxPos = $chars.length
+            ,i = 0
+            ,pwd = '';
+        for (i; i < len; i++) {
+            pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+        }
+        return pwd;
+    }
+
+
+	var stringutils = {
+
+		/*
+		 * 判断就否为手机号码
+		 * */
+		isMobile: function(value) {
+			var __temp = this.trim(value);
+			var p = /^0*(13|14|15|16|17|18)\d{9}$/;
+			return p.test(__temp);
+		},
+		/*
+		 * 将字符串中的指定字符全部替换成另一个字符
+		 * str:整个字符串
+		 * a:要被替换的字符
+		 * b:替换成这个字符
+		 * mm:匹配模式，如下:
+		 * 	g:全局匹配
+			i:区分大小写
+			m:多行匹配
+		 * */
+		strReplace: function(str, a, b, mm) {
+			if(m == null) {
+				m = '';
+			}
+			var cc = str.replace(new RegExp(a, mm), b);
+			return cc;
+		},
+		/*
+		 * 补位，给指定字符串前面补位，用指定的字符补位，默认为空格
+		 * str:指定字符
+		 * len:补几位
+		 * ch:补什么字符
+		 * */
+		leftpad: function(str, len, ch) {
+			str = String(str);
+			var i = -1;
+			if(!ch && ch !== 0) ch = ' ';
+			while(++i < len) {
+				str = ch + str;
+			}
+			return str;
+		},
+	};
+	window.stringutils = stringutils;
+}());
+/*
+ * 扩展原生数，以及数组相关功能
+ */
+
+(function() {
+	/**
+	 * 洗牌算法 打乱数组
+	 * @return 打乱后的数组
+	 * */
+	Array.prototype.shuffle = function() {
+		var i, t, m = this.length;
+		while(m) {
+			i = Math.floor(Math.random() * m--);
+			t = this[m];
+			this[m] = this[i];
+			this[i] = t;
+		}
+		return this;
+	}
+
+	/**
+	 * 获取数组中的 最小值|最大值
+	 * @param {string} str {'min'|'max'}
+	 * @return 数组中的一个值
+	 * */
+	Array.prototype.getValue = function(str) {
+		var arr = this;
+		var value = arr[0];
+		for(var i = 1; i < arr.length; i++) {
+			if(str === 'min' && value > arr[i]) {
+				value = arr[i];
+			} else if(str === 'max' && value < arr[i]) {
+				value = arr[i];
+			}
+		}
+		return value;
+	}
+
+	/**
+	 * 随机抓取N个元素生成新数组，如果__num为0或不填，则返回原数组
+	 * @param {Number} __num
+	 * */
+	Array.prototype.getExt = function(__num) {
+		if(__num === 0 || !__num) {
+			return this;
+		}
+		var arr = this.shuffle();
+		var arr2 = [];
+		for(var i = 0; i < __num; i++) {
+			arr2.push(arr[i]);
+		}
+
+		return arr2;
+	}
+
+	var arrayutils = {}
+
+	window.arrayutils = arrayutils;
+}());
+/*
+ * 数学相关的功能
+ */
+(function() {
+	var mathutils = {
+		/**
+		 * 计算两点间距离
+		 * @param {object} [p1] 点1
+		 * @param {object} [p2] 点2
+		 * */
+		getDistance: function(p1, p2) {
+			var a = p2.x - p1.x;
+			var b = p2.y - p1.y;
+			var n = Math.sqrt(a * a + b * b);
+			return n;
+		},
+
+		/**
+		 * 计算两点间直线任意点的坐标，p1 p2为直线的两个端点，_x和_y为要求的坐标点中的一个坐标，求另一个
+		 * @param {object} [p1] 点1
+		 * @param {object} [p2] 点2
+		 * @param {number} [_x] 要求的点的x坐标，求x坐标的话，该参数填null
+		 * @param {number} [_y] 要求的点的y坐标，求x坐标的话，该参数填null
+		 * */
+		getOnLineXY: function(p1, p2, _x, _y) {
+			var k = (p2.y - p1.y) / (p2.x - p1.x);
+			var b = p1.y - k * (p1.x);
+			if(_x == null) {
+				_x = (_y - b) / k;
+			} else if(_y == null) {
+				_y = k * _x + b;
+			}
+			var p = {
+				x: _x,
+				y: _y
+			};
+			return p;
+		},
+
+		/**
+		 * 计算两点间直线中心点坐标
+		 * @param {object} [p1] 点1
+		 * @param {object} [p2] 点2
+		 * */
+		getOnLineCenter: function(p1, p2) {
+			var xx = (p1.x + p2.x) / 2;
+			var yy = (p1.y + p1.y) / 2;
+			var p = {
+				x: xx,
+				y: yy
+			};
+			return p;
+		},
+
+		/**
+		 * 返回起点到终点的角度
+		 * @param {object} [start] 起点
+		 * @param {object} [end] 终点
+		 * */
+		Cangle: function(start, end) {
+			var diff_x = end.x - start.x,
+				diff_y = end.y - start.y;
+			//返回角度,不是弧度
+			return 360 * Math.atan(diff_y / diff_x) / (2 * Math.PI);
+		},
+
+		/**
+		 * 每隔三位数加一个逗号
+		 * @param {string/number} [value] 要转换的值
+		 * */
+		cutStr: function(value) {
+			var temp = parseFloat(value).toLocaleString();
+			return temp;
+		},
+
+		/**
+		 * 获取椭圆内随机一点
+		 * @param {number} radiusX 椭圆X轴半径
+		 * @param {number} radiusY 椭圆Y轴半径
+		 * @param {object} 随机点
+		 * */
+		getEllipseRandomPoint: function(radiusX, radiusY) {
+			var angle = (Math.random() * 360);
+			//正弦函数图像特点 x∈[0,2π] 5点观察值[0,1, 0,-1,0]
+			//余弦函数图像特点 x∈[0,2π] 5点观察值[1,0,-1, 0,1]
+			return {
+				x: Math.sin(Math.PI / 180 * angle) * (Math.random() * randiusX),
+				y: Math.cos(Math.PI / 180 * angle) * (Math.random() * randiusY)
+			}
+		},
+
+		/**
+		 * 计算斐波那契数列 递归
+		 */
+		fbnq: function(n) {
+			if(n == 1 || n == 2) {
+				return 1;
+			}
+			return Math.fbnq(n - 1) + Math.fbnq(n - 2);
+		},
+
+		/**
+		 * 计算斐波那契数列 非递归
+		 */
+		fbnq2: function(n) {
+			var a, b, res;
+			a = b = 1;
+			for(var i = 3; i <= n; i++) {
+				res = a + b;
+				a = b;
+				b = res;
+			}
+			return res;
+		},
+
+		/**
+		 * 生成一个范围内的随机数
+		 */
+		getRandomNum: function(min, max) {
+			return Math.random() * (max - min) + min;
+		},
+
+		/**
+		 * 求两个数的最大公约数
+		 */
+		gcd: function(num1, num2) {
+			if(num1 % num2 == 0) {
+				return num2;
+			} else {
+				return Math.gcd(num2, num1 % num2);
+			}
+		},
+
+		/**
+		 * 求两个数的最小公倍数
+		 */
+		lcm: function(num1, num2) {
+			var num = num1 * num2 / Math.gcd(num1, num2);
+			return num;
+		},
+
+		/**
+		 * 根据数组里的概率元素，生成新的概率数组
+		 * @例：var a=[0.5,0.1,0.2,0.2]; 就是50%个0，10%个1，20%个2，20%个3，生成的数组就是[0,0,0,0,0,1,2,2,3,3]
+		 * 注：数组元素的和不要大于1，做概率相关的程序时可以用到它
+		 * 因为用到了最小公倍数函数，所以就把它放到数学类里了，而没放到数组类里
+		 * */
+		getPro: function(__arr) {
+			var p = __arr;
+			var L = getLCM(p); //获取最小公倍数
+
+			var A = [];
+			var l = 0;
+			for(var i = 0; i < p.length; i++) {
+				var k = L * p[i] + l;
+				while(l < k) {
+					A[l] = i;
+					l++;
+				}
+			}
+
+			function getLCM(__p) {
+				var n = 1;
+				for(var i = 0; i < p.length; i++) {
+					n = Math.lcm(n, 1 / p[i]);
+				}
+				return n;
+			}
+
+			return A;
+		}
+	};
+
+	Object.assign(Math, mathutils);
 }());
