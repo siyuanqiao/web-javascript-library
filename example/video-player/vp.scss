@@ -5,6 +5,29 @@
   margin:0;
   padding:0;
 }
+button{
+  border:0;
+  outline:0;
+  cursor: pointer;
+}
+
+// Positioning stuff
+@mixin position($position,$l:null,$t:null,$r:null,$b:null,$z:99) {
+  position: $position;
+  @if($l){
+    left: $l;
+  }
+  @if($t){
+    top:$t;
+  }
+  @if($r){
+    right: $r;
+  }
+  @if($b){
+    bottom: $b;
+  }
+  z-index: $z;
+}
 
 @mixin pst($p,$l:false,$t:false,$z:false){
   position:$p;
@@ -30,7 +53,7 @@
   }
 }
 
-.video-player-wrap{
+.video-player{
   position:relative;
   width:100%;
   height:auto;
@@ -39,18 +62,18 @@
 .show{
   display: block !important;
 }
-.player_tips{
+.player-tips{
   @include pst(absolute,0,0,8);
   @include box(block,100%,100%);
 
-  .player_play_btn{
+  .playing{
     @include pst(absolute,50%,50%,1);
     @include box(block,50px,50px);
     margin-left:-25px;
     margin-top:-25px;
     background:#000 url('img/playing.png') no-repeat center center;
   }
-  .player_waiting{
+  .waiting{
     @include pst(absolute,50%,50%,2);
     @include box(none,50px,50px);
     margin-left:-25px;
@@ -67,14 +90,14 @@
       animation:rotate 2s linear 0s infinite;
     }
   }
-  .player_warning{
+  .warning{
     @include pst(absolute,50%,50%,3);
     @include box(none,90px,130px);
     margin-left:-45px;
     margin-top:-65px;
     //background:#000 url('img/playerIcons.png') no-repeat center center;
   }
-  .player_ended{
+  .replaying{
     @include pst(absolute,50%,50%,4);
     @include box(none,50px,50px);
     margin-left:-25px;
@@ -86,7 +109,6 @@
   @include pst(absolute,0,false,9);
   bottom: 0;
   width:100%;
-  //padding:25px 0;
   background-color:black;
   font-size: 10px;
   color: white;
@@ -96,12 +118,36 @@
     float: left;
     width:100px;
     text-align: center;
+
+    .play{
+      background-image:url('img/playing.png');
+    }
+    .pause{
+      background-image:url('img/paused.png');
+    }
   }
   .controls-right{
     float: right;
     width:100px;
     text-align: center;
+
+    .mute-off{
+      background-image:url('img/mute_off.png');
+    }
+    .mute-on{
+      background-image:url('img/mute_on.png');
+    }
   }
+  .switch,.mute{
+    //border:1px solid red;
+    width:25px;
+    height:25px;
+    background-color:transparent;
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size:auto;
+  }
+
   .process-bar{
     position:relative;
     top:19px;
@@ -123,33 +169,7 @@
   }
 }
 
-button{
-  border:0;
-  outline:0;
-  cursor: pointer;
-}
 
-.togg-btn,.mute{
-  //border:1px solid red;
-  width:25px;
-  height:25px;
-  background-color:transparent;
-  background-repeat:no-repeat;
-  background-position: center;
-  background-size:auto;
-}
-.playing{
-  background-image:url('img/playing.png');
-}
-.paused{
-  background-image:url('img/paused.png');
-}
-.mute-off{
-  background-image:url('img/mute_off.png');
-}
-.mute-on{
-  background-image:url('img/mute_on.png');
-}
 
 
 @keyframes rotate {

@@ -5,7 +5,12 @@
   margin: 0;
   padding: 0; }
 
-.video-player-wrap {
+button {
+  border: 0;
+  outline: 0;
+  cursor: pointer; }
+
+.video-player {
   position: relative;
   width: 100%;
   height: auto;
@@ -14,14 +19,14 @@
 .show {
   display: block !important; }
 
-.player_tips {
+.player-tips {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 8;
   width: 100%;
   height: 100%; }
-  .player_tips .player_play_btn {
+  .player-tips .playing {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -31,7 +36,7 @@
     margin-left: -25px;
     margin-top: -25px;
     background: #000 url("img/playing.png") no-repeat center center; }
-  .player_tips .player_waiting {
+  .player-tips .waiting {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -46,11 +51,11 @@
     line-height: 50px;
     vertical-align: middle;
     background-color: #000; }
-    .player_tips .player_waiting img {
+    .player-tips .waiting img {
       margin-top: 10px;
       -webkit-animation: rotate 3s linear 0s infinite;
       animation: rotate 2s linear 0s infinite; }
-  .player_tips .player_warning {
+  .player-tips .warning {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -60,7 +65,7 @@
     height: 130px;
     margin-left: -45px;
     margin-top: -65px; }
-  .player_tips .player_ended {
+  .player-tips .replaying {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -86,10 +91,25 @@
     float: left;
     width: 100px;
     text-align: center; }
+    .player-controls .controls-left .play {
+      background-image: url("img/playing.png"); }
+    .player-controls .controls-left .pause {
+      background-image: url("img/paused.png"); }
   .player-controls .controls-right {
     float: right;
     width: 100px;
     text-align: center; }
+    .player-controls .controls-right .mute-off {
+      background-image: url("img/mute_off.png"); }
+    .player-controls .controls-right .mute-on {
+      background-image: url("img/mute_on.png"); }
+  .player-controls .switch, .player-controls .mute {
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto; }
   .player-controls .process-bar {
     position: relative;
     top: 19px;
@@ -115,31 +135,6 @@
       width: 0;
       left: 0;
       background-color: #9b9b9b; }
-
-button {
-  border: 0;
-  outline: 0;
-  cursor: pointer; }
-
-.togg-btn, .mute {
-  width: 25px;
-  height: 25px;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto; }
-
-.playing {
-  background-image: url("img/playing.png"); }
-
-.paused {
-  background-image: url("img/paused.png"); }
-
-.mute-off {
-  background-image: url("img/mute_off.png"); }
-
-.mute-on {
-  background-image: url("img/mute_on.png"); }
 
 @keyframes rotate {
   0% {

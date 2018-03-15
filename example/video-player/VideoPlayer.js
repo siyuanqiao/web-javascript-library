@@ -1,79 +1,116 @@
-
 var VideoPlayer = function(params) {
+    var setting={
+        el:null,
+        url:null,
+        volume:1,
+        mute:false
+    }
+
+    setting=Object.assign(setting,params);
 
     this._dom = $(params.el);
     this._video = this._dom.find("video")[0];
-    this._video.src = params.url;
-    // this._video.volume=0;
 
-    //skin
-    this._skin = new Skin(this._video, this._dom[0]);
+    if(setting.url)this._video.src = setting.url;
+    if(setting.volume!=1)this._video.volume=setting.volume;
+    if(setting.mute)this._video.mute=setting.mute;
+
+    this._skin = new Skin(this._dom,this._video);
     this._skin.init();
-
 };
 
-var Skin = function(_v, _d) {
+var Skin = function(_dom , _video) {
     var scope = this;
 
     this._onState = null;
     this._onMute=false;
 
-    this._video = _v;
-    this._dom = _d;
+    //视频div层
+    this._dom = _dom;
+    //视频对象
+    this._video = _video;
+
+    //提示层
+    this._playerTips=null;
+    this._playing=null;
+    this._waiting=null;
+    this._replaying=null;
+
+    //控制层
+    this._playerControls=null;
+    this._switchBtn=null;
+    this._timeCurrent=null;
+    this._timeDuration=null;
+    this._processBar=null;
+    this._processBuffer=null;
+    this._processLine=null;
+    this._muteBtn=null;
 
     this.init=function(){
-        $('.time-current').text(formatTime(0));
-        $('.time-duration').text(formatTime(0));
 
-        addVideoEvents(_v);
+        this._dom.mouseover(function(event){
+            scope._playerControls.show();
+        }).mouseout(function(event){
+            if(scope._onState==null || scope._onState=='pause' || scope._onState=='ended'){
 
-        document.querySelector(".player_tips").addEventListener("click", function(e) {
+            }else{
+                scope._playerControls.hide();
+            }
+        });
+
+        this._playerTips=this._dom.find(".player-tips").click(function(e) {
             e.stopPropagation(); //不再派发事件
             if(scope._onState=='ended'){
                 scope.toPlay();
-                $('.player_ended').hide();
+                scope._replaying.hide();
             }else{
                 scope.togglePlay();
             }
         });
-        this._dom.addEventListener("mouseover",function(){
-            $('.player-controls').show();
-        });
-        this._dom.addEventListener("mouseout",function(){
-            if(scope._onState==null || scope._onState=='pause' || scope._onState=='ended'){
+        this._playing=this._dom.find('.playing');
+        this._waiting=this._dom.find('.waiting');
+        this._replaying=this._dom.find('.replaying');
 
+        this._playerControls=this._dom.find('.player-controls');
+        //播放和暂停按钮
+        this._switchBtn=this._dom.find('.switch').click(function(e){
+            e.stopPropagation(); //不再派发事件
+            if(scope._onState=='ended'){
+                scope.toPlay();
+                scope._replaying.hide();
             }else{
-                $('.player-controls').hide();
+                scope.togglePlay();
             }
         });
-        //播放和暂停按钮
-        document.querySelector(".togg-btn").addEventListener('click',function(e){
-            e.stopPropagation();
-            scope.togglePlay();
-        });
-        document.querySelector('.process-bar').addEventListener('click',function(e){
+        this._timeCurrent=this._dom.find('.time-current').text(formatTime(0));
+        this._timeDuration=this._dom.find('.time-duration').text(formatTime(0));
+        this._processBar=this._dom.find('.process-bar').click(function(e){
             var offsetX=e.offsetX,barWidth=$(e.currentTarget).width();
             var n=(offsetX/barWidth);
-            var d=_v.duration;
+            var d=_video.duration;
             var ct=n*d;
             console.log(offsetX,barWidth,n,ct,d);
             scope.seek(ct);
         });
+        this._processBuffer=this._dom.find('.process-buffer');
+        this._processLine=this._dom.find('.process-line');
         //静音按钮
-        document.querySelector(".mute").addEventListener('click',function(e){
+        this._muteBtn=this._dom.find(".mute").click(function(e){
             e.stopPropagation();
             scope.onMute=!scope.onMute;
         });
+
+        addVideoEvents(_video);
     }
 
     function addVideoEvents(_v) {
-        /*当音频/视频处于加载过程中时，会依次发生以下事件：*/
+        //当音频/视频处于加载过程中时，会依次发生以下事件：
         _v.addEventListener("loadstart", function() {//客户端开始请求数据
             console.log('1、loadstart、客户端开始请求数据');
         }, false);
         _v.addEventListener("durationchange", function() {//资源长度改变
             console.log('2、durationchange、资源长度改变');
-            $('.time-duration').text(formatTime(_v.duration));
+            scope._timeDuration.text(formatTime(_v.duration));
         }, false);
         _v.addEventListener("loadedmetadata", function() {
             console.log('3、loadedmetadata、');
@@ -88,7 +125,7 @@ var Skin = function(_v, _d) {
                 log+='正在缓冲：' + n + '%';
                 scope.setProcess(n);
             }
-            //console.log(log);
+            console.log(log);
         }, false);
         _v.addEventListener("canplay", function() {
             console.log('6、canplay、缓冲已足够开始时。-----每次卡住，再缓冲成功都会调用此方法');
@@ -151,7 +188,7 @@ var Skin = function(_v, _d) {
             case 4:
                 err.error = "播放过程中URL无效"
         }
-
+        console.log(JSON.stringify(err));
         scope.showWarning();
     }
 
@@ -159,47 +196,46 @@ var Skin = function(_v, _d) {
 Skin.prototype = {
     set onMute(value){
       this._onMute=value;
+
       if(value)
           this._video.muted=true;
       else
           this._video.muted=false;
-      $('.mute').toggleClass('mute-off mute-on');
+
+      this._muteBtn.toggleClass('mute-off mute-on');
     },
     get onMute(){
         return this._onMute;
     },
     set onState(value){
         this._onState=value;
+
         if(value=='waiting'){
             this.showWaiting();
         }else if(value=='playing'){
-            $('.togg-btn').removeClass('playing paused').addClass('paused');
+            this._switchBtn.removeClass('play pause').addClass('pause');
         }else if(value=='pause'){
-            $('.togg-btn').removeClass('playing paused').addClass('playing');
+            this._switchBtn.removeClass('play pause').addClass('play');
         }else if(value=='ended'){
             this.showEnded();
+            this._playerControls.show();
         }
     },
-    showPause: function() {
-    },
-    hidePause: function() {
-    },
-    showProcessBar: function() {
-    },
-    hideProcessBar: function() {
-    },
+    showPause: function() {},
+    hidePause: function() {},
+    showProcessBar: function() {},
+    hideProcessBar: function() {},
     updateBar: function() {
-
         var length = parseInt(this._video.duration),
             ct = parseInt(this._video.currentTime),
             n =  ct / length *100;
 
-        $(".process-line").css({width: n+"%"});
+        this._processLine.css({width: n+"%"});
 
-        $('.time-current').text(formatTime(ct));
+        this._timeCurrent.text(formatTime(ct));
     },
     setProcess: function(n) {
-        $('.process-buffer').css('width',n+'%');
+        this._processBuffer.css('width',n+'%');
     },
     seek: function(e) {
         this._video.currentTime = e
@@ -207,18 +243,18 @@ Skin.prototype = {
     toPlay: function() {
         this._video.play();
 
-        $('.player_play_btn').hide();
+        this._playing.hide();
     },
     toPause: function() {
         this._video.pause();
 
-        $('.player_play_btn').show();
+        this._playing.show();
     },
     showWaiting: function() {
-        $(".player_waiting").show();
+        this._waiting.show();
     },
     hideWaiting: function() {
-        $(".player_waiting").hide();
+        this._waiting.hide();
     },
     showWarning: function() {
 
@@ -231,10 +267,9 @@ Skin.prototype = {
             //如果当前在加载则影藏加载，显示出播放按钮
             this.hideWaiting();
         }
-
     },
     showEnded:function(){
-        $('.player_ended').show();
+        this._replaying.show();
     }
 };
 
