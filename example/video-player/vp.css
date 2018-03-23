@@ -12,8 +12,16 @@ button {
 
 .video-player {
   position: relative;
+  top: 50%;
   width: 100%;
   height: auto;
+  max-width: 1280px;
+  margin: 0 auto;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
   font-family: Arial,sans-serif; }
 
 .show {

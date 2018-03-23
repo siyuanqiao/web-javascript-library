@@ -10,7 +10,15 @@ button{
   outline:0;
   cursor: pointer;
 }
-
+@mixin css3($property,$value){
+  @each $prefix in -webkit-,
+  -moz-,
+  -ms-,
+  -o-,
+  ''{
+    #{$prefix}#{$property}:$value;
+  }
+}
 // Positioning stuff
 @mixin position($position,$l:null,$t:null,$r:null,$b:null,$z:99) {
   position: $position;
@@ -42,8 +50,12 @@ button{
 
 .video-player{
   position:relative;
+  top:50%;
   width:100%;
   height:auto;
+  max-width: 1280px;
+  margin:0 auto;
+  @include css3(transform,translateY(-50%));
   font-family: Arial,sans-serif;
 }
 .show{
