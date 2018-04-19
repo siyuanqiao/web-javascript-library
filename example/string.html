@@ -31,11 +31,13 @@
 				clear: both;
 			}
 		</style>
-		<script src="../lib/stringutils.js"></script>
+		<script src="../lib/string.js"></script>
 	</head>
 
 	<body>
 		<button onclick="trim()" id="btn_trim">去掉左右空格</button>
+		<div class="clear"></div>
+		<button onclick="getURLValue()" id="btn_trim">获取url上的参数值</button>
 		<div class="clear"></div>
 		<input id="inputStr" /><button onclick="empty()">判断是否为空字符</button>
 		<div class="clear"></div>
@@ -47,44 +49,68 @@
 		<div class="clear"></div>
 		<input id="inputA3" /><span style="float: left;">删除第几个字符</span><input id="inputB3" /><button onclick="del()">删除指定位置的字符</button>
 		<div class="clear"></div>
+		<input id="inputEmail" /><button onclick="email()">判断是否为电子邮箱</button>
+		<div class="clear"></div>
+		<input id="inputID" /><button onclick="isId()">判断是否为身份证</button>
+		<div class="clear"></div>
 
 		<script>
 			function trim() {
 				var __str = '  去掉左右空格  ';
 				console.log('去掉前:::' + __str);
-				__str = stringutils.trim(__str);
+				__str = __str.trim();
 				console.log('去掉后:::' + __str);
 			}
 
 			function empty() {
 				var __str = document.getElementById('inputStr').value;
-				alert(stringutils.isEmpty(__str));
+				var aa = __str.isEmpty();
+				if(aa == true) {
+					console.log('是空字符');
+				} else {
+					console.log('不是空字符');
+				}
 			}
 
 			function phone() {
 				var __str = document.getElementById('inputPhone').value;
-				alert(stringutils.isMobile(__str));
+				alert(__str.isMobile());
 			}
 
 			function leftPad() {
 				var __str = document.getElementById('inputA').value;
 				var __str2 = document.getElementById('inputB').value;
-				var __str3 = stringutils.leftpad(__str, 2, __str2);
+				var __str3 = stringUtil.leftpad(__str, 2, __str2);
 				alert(__str3);
 			}
-			
-			function insert(){
+
+			function insert() {
 				var __str = document.getElementById('inputA2').value;
 				var __str2 = document.getElementById('inputB2').value;
-				var __str3 = stringutils.insert_flg(__str, __str2, 2);
+				var __str3 = __str.insert_flg(__str2, 2);
 				alert(__str3);
 			}
-			
-			function del(){
+
+			function del() {
 				var __str = document.getElementById('inputA3').value;
 				var __str2 = document.getElementById('inputB3').value;
-				var __str3 = stringutils.del_flg(__str,__str2);
+				var __str3 = __str.del_flg(__str2, 1);
 				alert(__str3);
+			}
+
+			function getURLValue() {
+				var bb = window.location.search.getQuerystring();
+				console.log(bb);
+			}
+			
+			function email(){
+				var __str = document.getElementById('inputEmail').value;
+				alert(__str.isEmail());
+			}
+			
+			function isId(){
+				var __str = document.getElementById('inputID').value;
+				alert(__str.isID());
 			}
 		</script>
 	</body>

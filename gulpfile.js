@@ -14,10 +14,10 @@ gulp.task('minifyjs',function(){
             "lib/cookies.js",
             "lib/util.js",
             "lib/os.js",
-            "lib/numberutils.js",
-            "lib/stringutils.js",
-            "lib/arrayutils.js",
-            "lib/mathutils.js",
+            "lib/number.js",
+            "lib/string.js",
+            "lib/array.js",
+            "lib/math.js",
         ])  //选择合并的JS
         .pipe(concat('common.js'))   //合并js
         .pipe(gulp.dest('dist/js'))   //输出

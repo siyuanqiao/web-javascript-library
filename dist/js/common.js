@@ -239,7 +239,7 @@ function getData(str){
     window.util=util;
 }());
 
-(function(){
+;(function(window){
     var userAgent=window.navigator.userAgent;
     var find=function(needle){
         return userAgent.indexOf(needle) !== -1;
@@ -265,7 +265,7 @@ function getData(str){
     os.isMobile=userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
 
     window.os=os;
-}());
+})(window);
 
 /**
  * 数字值相关功能
@@ -305,111 +305,63 @@ function getData(str){
  * 字符相关功能
  * 遵循mozilla的规则：扩展内置原型的唯一理由是支持JavaScript 引擎的新特性，如Array.forEach。
  */
-
 (function() {
-	//扩展内置String对象
-	var sp=String.prototype;
+	var sp = String.prototype;
 
 	/**
 	 * 删除字符串两端的空白字符。
 	 * @return 返回的是一个新的字符串
 	 * */
-	if(!sp.trim){
-		sp.trim=function(){
-            return this.replace(/(^\s*)|(\s*$)/g, "");
+	if(!sp.trim) {
+		sp.trim = function() {
+			return this.replace(/(^\s*)|(\s*$)/g, "");
 		}
 	}
 
-	/**
-	 * 去除左空格
-	 * */
-	if(!sp.ltrim){sp.ltrim=function(){return this.replace(/(^\s*)/g,"");}}
+	//去除左空格
+	if(!sp.ltrim) {
+		sp.ltrim = function() {
+			return this.replace(/(^\s*)/g, "");
+		}
+	}
 
-	/**
-	 * 去除右空格
-	 * */
-	if(!sp.rtrim)sp.rtrim=function(){return this.replace(/(\s*$)/g,"");}
+	//去除右空格
+	if(!sp.rtrim) sp.rtrim = function() {
+		return this.replace(/(\s*$)/g, "");
+	}
 
-	/**
-	 * 判断是否为空字符
-	 * */
-	sp.isEmpty=function(value) {
-        var __temp = this.trim(value);
-        return __temp.length == 0;
-    }
+	//判断是否为空字符
+	sp.isEmpty = function() {
+		var __temp = this.trim();
+		return __temp.length == 0;
+	}
 
 	/**
 	 * 在指定地方插入字符
 	 * @param {string} flg 要插入的字符串
 	 * @param {number} sn 要插入的位置
 	 * */
-    sp.insert_flg=function(flg, sn) {
-        var newstr = "";
-        var a = this.slice(0, sn);
-        var b = this.slice(sn);
-        newstr = a + flg + b;
-        return newstr;
-    }
+	sp.insert_flg = function(flg, sn) {
+		var newstr = "";
+		var a = this.slice(0, sn);
+		var b = this.slice(sn);
+		newstr = a + flg + b;
+		return newstr;
+	}
 
 	/**
 	 * 删除指定地方的字符
 	 * @param {number} sn 要删除的位置
 	 * @param {number} len 删除字符的长度
 	 * */
-    sp.del_flg=function(sn,len) {
-    	len=len||1;
-        var newstr = "";
-        var arr = this.split('');
-        arr.splice(sn - 1, len);
-        newstr = arr.join("");
-        return newstr;
-    }
-
-    /**
-     * 解析url,待实现！！！！
-     * @return
-     * */
-    sp.urlParse=function(){
-		//http://180.ai?a=1&b=2#tech
-		return {
-            protocol: 'http:',
-            slashes: true,
-            auth: null,
-            host: '180.ai',
-            port: null,
-            hostname: '180.ai',
-            hash: '#tech',
-            search: '?a=1&b=2',
-            query: 'a=1&b=2',
-            pathname: '/',
-            path: '/?a=1&b=2',
-            href: 'http://180.ai/?a=1&b=2#tech'
-		}
+	sp.del_flg = function(sn, len) {
+		len = len || 1;
+		var newstr = "";
+		var arr = this.split('');
+		arr.splice(sn - 1, len);
+		newstr = arr.join("");
+		return newstr;
 	}
-
-	/** 
-	 * 获取URL参数
-	 * @example
-	 * window.loaction.search.getURLParam();
-	 *
-	 * @retrun {}
-	 * */
-    sp.getQuerystring=function(){
-        //返回的参数对象
-        var ags={};
-        if(this.length>1){
-            var query=this.substring(1);
-            var items=query.split('&');
-            var item=null;
-            for(var i=0,len=items.length;i<len;i++){
-                item=items[i].split("=");
-                var key=decodeURIComponent(item[0]);
-                var val=decodeURIComponent(item[1]);
-                ags[key]=val;
-            }
-		}
-        return ags;
-    }
 
 	/**
 	 * 随机A-Z|a-z|0-9 中的随机组合
@@ -420,23 +372,75 @@ function getData(str){
 	 *
 	 * @return {string} 随机组合的字符
 	 * */
-    sp.randomString=function(len){
-        len=len || 32;
-        var $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'
-            ,maxPos = $chars.length
-            ,i = 0
-            ,pwd = '';
-        for (i; i < len; i++) {
-            pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
-        }
-        return pwd;
-    }
+	sp.randomString = function(len) {
+		len = len || 32;
+		var $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890',
+			maxPos = $chars.length,
+			i = 0,
+			pwd = '';
+		for(i; i < len; i++) {
+			pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+		}
+		return pwd;
+	}
 
+	/** 
+	 * 获取URL参数
+	 * @example
+	 * window.location.search.getURLParam();
+	 *
+	 * @retrun {}
+	 * */
+	sp.getQuerystring = function() {
+		//返回的参数对象
+		var ags = {};
+		if(this.length > 1) {
+			var query = this.substring(1);
+			var items = query.split('&');
+			var item = null;
+			for(var i = 0, len = items.length; i < len; i++) {
+				item = items[i].split("=");
+				var key = decodeURIComponent(item[0]);
+				var val = decodeURIComponent(item[1]);
+				ags[key] = val;
+			}
+		}
+		return ags;
+	}
 
-	var stringutils = {
+	/*
+	 * 判断是否为手机号码
+	 * */
+	sp.isMobile = function() {
+		var __temp = this.trim();
+		var p = /^0*(13|14|15|16|17|18)\d{9}$/;
+		return p.test(__temp);
+	}
+	
+	/*
+	 * 判断就否为电子邮箱
+	 * */
+	sp.isEmail = function() {
+		var __temp = this.trim();
+		var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+		return myreg.test(__temp);
+	}
+	
+	/*
+	 * 判断是否为身份证
+	 * */
+	sp.isID = function() {
+		var __temp = this.trim();
+		var myreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+		return myreg.test(__temp);
+	}
+}());
 
+;
+(function(window) {
+	var stringUtil = {
 		/*
-		 * 判断就否为手机号码
+		 * 判断是否为手机号码
 		 * */
 		isMobile: function(value) {
 			var __temp = this.trim(value);
@@ -450,8 +454,8 @@ function getData(str){
 		 * b:替换成这个字符
 		 * mm:匹配模式，如下:
 		 * 	g:全局匹配
-			i:区分大小写
-			m:多行匹配
+		    i:区分大小写
+		    m:多行匹配
 		 * */
 		strReplace: function(str, a, b, mm) {
 			if(m == null) {
@@ -474,14 +478,13 @@ function getData(str){
 				str = ch + str;
 			}
 			return str;
-		},
+		}
 	};
-	window.stringutils = stringutils;
-}());
-/*
+	window.stringUtil = stringUtil;
+})(window);
+/**
  * 扩展原生数，以及数组相关功能
  */
-
 (function() {
 	/**
 	 * 洗牌算法 打乱数组
@@ -682,13 +685,6 @@ function getData(str){
 		},
 
 		/**
-		 * 生成一个范围内的随机数
-		 */
-		getRandomNum: function(min, max) {
-			return Math.random() * (max - min) + min;
-		},
-
-		/**
 		 * 求两个数的最大公约数
 		 */
 		gcd: function(num1, num2) {
@@ -736,6 +732,20 @@ function getData(str){
 			}
 
 			return A;
+		},
+
+        /*
+		* 范围内随机取整
+		* */
+        randomInteger:function(low,high){
+			return low+Math.floor(Math.random()*(high-low));
+		},
+
+        /*
+        * 范围内随机取小数
+        * */
+        randomFloat:function(low,high){
+			return low+(Math.random()*(high-low));
 		}
 	};
 
