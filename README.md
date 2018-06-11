@@ -1,17 +1,15 @@
-# 获取图片非透明区域的数据
-
 # npm安装
 
-```html
-npm install @zengbin/unitjs
+```
+npm install 180lab
 ```
 
 # script引用
 ```html
-<script src="./lib/bundle.js"></script>
+<script src="./lib/lab.js"></script>
 ```
 
-# 使用
-```js
-Unit.getImageData(image,image.width,iamge.height)
+# 发布
+```
+npm run build
 ```
