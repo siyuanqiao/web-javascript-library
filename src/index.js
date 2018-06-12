@@ -3,18 +3,17 @@
 
 import './base/Array.js';
 import './base/Number.js';
+import './base/Math.js';
 
-import Math from './Math.js';
+import {setCookie,getCookie,deleteCookie} from "./cookies.js";
+
 import OS from './OS.js';
 import Util from './Util.js';
 import URL from './URL.js';
-import {setCookie,getCookie,deleteCookie} from "./cookies.js";
-
 import Texture from "./Texture.js";
 import WXShare from "./WXShare.js";
 
 export {
-    Math,
     OS,
     Util,
     URL,

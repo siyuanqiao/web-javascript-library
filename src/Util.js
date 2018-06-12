@@ -1,4 +1,7 @@
+import {extend} from './base/extend.js';
+
 export default {
+    extend:extend,
     /*
     * 秒转换成时分秒
     * @param {number} time 时间秒
@@ -109,19 +112,19 @@ export default {
     * @param value - 判断的value
     * */
     isArray:function(value){
-        return Object.prototype.toString().call(value)==='[Object Array]';
+        return Object.prototype.toString.call(value)==='[Object Array]';
     },
     /*
     * 判断对象是否为函数
     * */
     isFunction:function(value){
-        return Object.prototype.toString().call(value)==='[Object Function]';
+        return Object.prototype.toString.call(value)==='[Object Function]';
     },
     /*
     * 判断对象是否为正则
     * */
     isRegExp:function(value){
-        return Object.prototype.toString().call(value)==='[Object RegExp]';
+        return Object.prototype.toString.call(value)==='[Object RegExp]';
     },
     /**
      * 数字四舍五入（保留n位小数）

@@ -1,4 +1,6 @@
-export default {
+import {extend} from './extend.js';
+
+extend(Math,{
     /**
      * 计算两点间距离
      * @param {object} [p1] 点1
@@ -215,4 +217,4 @@ export default {
         }
         return nMath;
     }
-}
+});
