@@ -17,17 +17,24 @@ function addScript(url, onload, onerror) {
     return script;
 }
 
-/*addScript('//res.wx.qq.com/open/js/jweixin-1.0.0.js',function(){
+/*addScript('//res.wx.qq.com/open/js/jweixin-1.2.0.js',function(){
+    /!*$.getJSON('https://cdn.180china.com/wx-help/get-wx-config1',function(msg){
+      console.log(msg);
+    });*!/
     $.ajax({
         url: '/wx-help/get-wx-config',
         type: "POST",
         dataType: "json",
         success: function(msg) {
+            //alert(JSON.stringify(msg));
             configWxShare(msg);
+        },
+        error:function(error){
+            //alert(JSON.stringify(error));
         }
     });
 },function(){
-    new Error('load jweixin-1.0.0.js error！');
+    new Error('load jweixin-1.2.0.js error！');
 });*/
 
 function configWxShare(a) {
@@ -52,9 +59,9 @@ function configWxShare(a) {
 
 var shareObj = {
     sharePath: window.location.href, //分享地址
-    shareImg: "https://cdn.180china.com/activity/2018/JD-guopinri/img/share.jpg", //分享图片
-    shareTitle: "3.15京东国品日，京东联合CCTV国家品牌计划成员共同发出品质宣言！", //分享title
-    shareDesc: "为品质，在一起！共创品质新时代！" //分享描述
+    shareImg: "https://cdn.180china.com/plusday/static/resource/share.jpg", //分享图片
+    shareTitle: "京东PLUS会员狂欢日", //分享title
+    shareDesc: "PLUS会员，抢618元神券礼包；开通PLUS会员，尊享九大特权！" //分享描述
 };
 
 //设置分享内容
