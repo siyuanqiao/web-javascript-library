@@ -1,4 +1,5 @@
 let href=window.location.href;
+let search=window.location.search;
 
 export default {
     /**
@@ -25,15 +26,15 @@ export default {
     /**
      * 获取URL参数
      * @example
-     * window.urlUtil.queryString();
+     * LAB.URL.queryString();
      *
      * @retrun {}
      * */
     queryString:function(){
         //返回的参数对象
         var ags={};
-        if(href.length>1){
-            var query=href.substring(1);
+        if(search.length>1){
+            var query=search.substring(1);
             var items=query.split('&');
             var item=null;
             for(var i=0,len=items.length;i<len;i++){
