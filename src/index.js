@@ -3,10 +3,10 @@ import './base/Number.js';
 import './base/Math.js';
 
 export * from "./cookies.js";
-
 export * from './observer/array.js';
-export * from './OS.js';
-export * from './util/index.js';
-export * from './URL.js';
-export * from "./Texture.js";
-export * from "./WX.js";
+export {default as OS} from './OS.js';
+export {default as Util} from './util/index.js';
+export {default as URL} from './URL.js';
+export {default as Texture} from "./Texture.js";
+export {default as WX} from "./WX.js";
+
