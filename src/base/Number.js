@@ -1,4 +1,4 @@
-import {extend} from './extend.js';
+import extend from './extend.js';
 
 extend(Array.prototype,{
 

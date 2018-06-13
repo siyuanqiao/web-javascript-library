@@ -1,5 +1,17 @@
+let toString=Object.prototype.toString;
+let class2type={};
+("Boolean Number String Function Array Date RegExp Object".split(" ").forEach(function(name , i) {
+    class2type[ "[object " + name + "]" ] = name.toLowerCase();
+}));
+
+let type=function( obj ) {
+    return obj == null ?
+        String( obj ) :
+        class2type[ toString.call(obj) ] || "object";
+}
+
 // 为与源码的下标对应上，我们把第一个参数称为`第0个参数`，依次类推
-let extend = function() {
+export default function() {
     var options, name, src, copy, copyIsArray, clone,
         target = arguments[0] || {}, // 默认第0个参数为目标参数
         i = 1, // i表示从第几个参数凯斯想目标参数进行合并，默认从第1个参数开始向第0个参数进行合并
@@ -89,19 +101,3 @@ let extend = function() {
     // Return the modified object
     return target;
 };
-
-let toString=Object.prototype.toString;
-let class2type={};
-("Boolean Number String Function Array Date RegExp Object".split(" ").forEach(function(name , i) {
-    class2type[ "[object " + name + "]" ] = name.toLowerCase();
-}));
-
-let type=function( obj ) {
-    return obj == null ?
-        String( obj ) :
-        class2type[ toString.call(obj) ] || "object";
-}
-
-export {
-    extend
-}
