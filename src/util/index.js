@@ -1,4 +1,4 @@
-import {extend} from './base/extend.js';
+import extend from '../base/extend.js';
 
 export default {
     extend:extend,
