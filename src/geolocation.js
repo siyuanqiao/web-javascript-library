@@ -17,12 +17,12 @@ function success(pos) {
 
     longitude=crd.latitude;
     latitude=crd.longitude;
-    // alert(altStr);
+    alert(altStr);
 };
 
 function error(err) {
     var altStr=('ERROR(' + err.code + '): ' + err.message);
-    // alert(altStr);
+    alert(altStr);
 };
 
 navigator.geolocation.getCurrentPosition(success, error, options);

@@ -1,14 +1,4 @@
-let toString=Object.prototype.toString;
-let class2type={};
-("Boolean Number String Function Array Date RegExp Object".split(" ").forEach(function(name , i) {
-    class2type[ "[object " + name + "]" ] = name.toLowerCase();
-}));
-
-let type=function( obj ) {
-    return obj == null ?
-        String( obj ) :
-        class2type[ toString.call(obj) ] || "object";
-}
+import {type} from './type.js';
 
 // 为与源码的下标对应上，我们把第一个参数称为`第0个参数`，依次类推
 export default function() {

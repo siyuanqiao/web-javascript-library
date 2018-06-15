@@ -1,13 +1,16 @@
-import {longitude,latitude} from './geolocation.js';
+// import {longitude,latitude} from './geolocation.js';
+import {type} from "./base/type.js";
 
-export default function(arr){
+export default function(opt){
     let _search="";
-    let _option={
-        dot:String(longitude)+","+String(latitude),
-        gender:'3',
-        weChatId:'000',
-        ua:window.navigator.userAgent
-    }
+    let _option=(type(opt)==='object'
+        ?opt
+        :{
+            dot:"longitude,latitude",
+            gender:'3',
+            weChatId:'000',
+            ua:window.navigator.userAgent
+        });
     for(let s in _option)_search+=(s+"="+_option[s]+"&");
     //去掉最后一个&符
     _search=_search.slice(0,-1);

@@ -29,10 +29,8 @@ methodsToPatch.forEach(function (method) {
         switch (method) {
             case 'push':
             case 'unshift':
-                collection(['_trackEvent', 'nav', 'click-']);
-                break
-            case 'splice':
-                break
+                collection(args);
+                break;
         }
         return result;
     })

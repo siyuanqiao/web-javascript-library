@@ -14,34 +14,31 @@ export default class WX{
         };*/
         this.shareConfig=_shareConfig||null;
 
-        if(this.shareConfig){
+        util.addScript('//res.wx.qq.com/open/js/jweixin-1.2.0.js',()=>{
+            /*$.getJSON('https://cdn.180china.com/wx-help/get-wx-config1',function(msg){
+              console.log(msg);
+            });*/
             this.getWXConfig();
-        }
+        },()=>{
+            new Error('load jweixin-1.2.0.js error！');
+        });
     }
 
     /**
      * 获取微信分享配置信息
      * */
     getWXConfig(){
-        util.addScript('//res.wx.qq.com/open/js/jweixin-1.2.0.js',()=>{
-            /*$.getJSON('https://cdn.180china.com/wx-help/get-wx-config1',function(msg){
-              console.log(msg);
-            });*/
-            $.ajax({
-                url: '/wx-help/get-wx-config',
-                type: "POST",
-                dataType: "json",
-                success: (config)=>{
-                    //alert(JSON.stringify(msg));
-                    this.wxconfig=config;
-                    this.configWxShare(config);
-                },
-                error:(error)=>{
-                    //alert(JSON.stringify(error));
-                }
-            });
-        },()=>{
-            new Error('load jweixin-1.2.0.js error！');
+        $.ajax({
+            url: '/wx-help/get-wx-config',
+            type: "POST",
+            dataType: "json",
+            success: (config)=>{
+                //alert(JSON.stringify(msg));
+                this.configWxShare(config);
+            },
+            error:(error)=>{
+                //alert(JSON.stringify(error));
+            }
         });
     }
 
@@ -57,11 +54,15 @@ export default class WX{
                 'onMenuShareTimeline',
                 'onMenuShareAppMessage',
                 'onMenuShareQQ',
-                'onMenuShareWeibo'
+                'onMenuShareWeibo',
+                'openLocation',
+                'getLocation'
             ]
         });
         wx.ready(()=>{
             this.setShare(this.shareConfig);
+
+
         });
     }
 
@@ -94,5 +95,28 @@ export default class WX{
                 // 用户取消分享后执行的回调函数
             }
         });
+
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+
+                alert('获取微信经纬度成功：'+latitude+"---"+longitude);
+
+                lab.arrayMethods.push({
+                    dot:latitude+","+longitude,
+                    gender:'',
+                    weChatId:'',
+                    ua:window.navigator.userAgent
+                });
+            }
+        });
+    }
+
+    getLocation(srccess){
+
     }
 }
