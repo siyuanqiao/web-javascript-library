@@ -9,4 +9,6 @@ export {default as Util} from './util/index.js';
 export {default as URL} from './URL.js';
 export {default as Texture} from "./Texture.js";
 export {default as WX} from "./WX.js";
+export {default as Geolocation} from "./geolocation.js";
+export {default as collection} from "./collection.js";
 

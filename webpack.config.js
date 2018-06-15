@@ -2,11 +2,14 @@ const path = require('path');
 const webpack=require('webpack');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        'lab':'./src/index.js',
+        'collection':'./src/index_collection.js'
+    },
     output: {
         path: path.resolve(__dirname, 'lib'),
-        filename: 'lab.js',
-        library: 'LAB',
+        filename: '[name].js',
+        library: 'lab',
         libraryTarget:'var'
     },
     module: {

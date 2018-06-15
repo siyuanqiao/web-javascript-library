@@ -2,8 +2,8 @@
  * not type checking this file because flow doesn't play well with
  * dynamically accessing methods on Array prototype
  */
-
-import { def } from '../util/lang.js'
+import collection from '../collection.js';
+import { def } from '../util/lang.js';
 
 const arrayProto = Array.prototype;
 export const arrayMethods = Object.create(arrayProto);
@@ -29,6 +29,7 @@ methodsToPatch.forEach(function (method) {
         switch (method) {
             case 'push':
             case 'unshift':
+                collection(['_trackEvent', 'nav', 'click-']);
                 break
             case 'splice':
                 break
