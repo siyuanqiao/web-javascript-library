@@ -3,7 +3,7 @@
  * dynamically accessing methods on Array prototype
  */
 import collection from '../collection.js';
-import { def } from '../util/lang.js';
+import { def } from '../../util/lang.js';
 
 const arrayProto = Array.prototype;
 export const arrayMethods = Object.create(arrayProto);

@@ -1,14 +1,10 @@
-import './base/Array.js';
-import './base/Number.js';
-import './base/Math.js';
+import './base/index';
 
-export * from "./cookies.js";
-export * from './observer/array.js';
-export {default as OS} from './OS.js';
+export * from "./core/cookies";
+export * from "./core/os";
+export * from "./core/browser";
+
 export {default as Util} from './util/index.js';
-export {default as URL} from './URL.js';
-export {default as Texture} from "./Texture.js";
-export {default as WX} from "./WX.js";
-export {default as Geolocation} from "./geolocation.js";
-export {default as collection} from "./collection.js";
+export {default as URL} from './core/url.js';
+export {default as WX} from "./core/WX.js";
 

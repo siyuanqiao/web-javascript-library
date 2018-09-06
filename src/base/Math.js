@@ -1,4 +1,4 @@
-import extend from './extend.js';
+import extend from '../util/extend.js';
 
 extend(Math,{
     /**

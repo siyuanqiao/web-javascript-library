@@ -1,5 +1,5 @@
-import extend from "./base/extend.js";
-import util from './util/index.js';
+import extend from "../util/extend.js";
+import util from '../util/index.js';
 
 export default class WX{
     /**

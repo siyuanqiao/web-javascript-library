@@ -1,9 +1,9 @@
-import extend from '../base/extend.js';
+import extend from './extend.js';
 import {addClass, removeClass, hasClass, toggleClass} from "./class";
 import {isPlainObject, isFunction, isArray, isRegExp} from "./require";
 
 export default {
-  extend: extend,
+  extend,
   addClass,
   removeClass,
   hasClass,
@@ -67,22 +67,6 @@ export default {
     document.head.appendChild(script);
     return script;
   },
-  /*
-  * 获取DOM第几个子元素
-  * */
-  getElementIndex: function (ele) {
-    var elements = ele.parentNode.childNodes;
-    for (var index = 0, i = 0, len = elements.length; i < len; i++) {
-      if (ele === elements[i]) {
-        return index;
-      }
-      if (elements[i].nodeType == 1) {
-        index++;
-      }
-    }
-    throw '获取错误';
-  },
-
   /**
    * 数字四舍五入（保留n位小数）
    * @param {number} [number] 要四舍五入的数字

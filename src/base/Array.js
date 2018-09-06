@@ -1,7 +1,4 @@
-//基本数据类型：Nndefined Null Boolean String Number
-//引用数据类型：Object Symbol
-
-import extend from './extend.js';
+import extend from '../util/extend.js';
 
 extend(Array.prototype,{
     /**

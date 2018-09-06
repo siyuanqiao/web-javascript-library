@@ -35,7 +35,7 @@
     asyncLoadImage('test6.png').then(function(image){
         document.body.appendChild(image);
 
-        let texture=new LAB.Texture(image);
+        let texture=new lab.Texture(image);
         let xyData=texture.getPixels(0,0,image.width,image.height);
 
         let canvas=document.createElement("canvas");

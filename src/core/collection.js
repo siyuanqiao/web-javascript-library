@@ -1,5 +1,5 @@
 // import {longitude,latitude} from './geolocation.js';
-import {type} from "./base/type.js";
+import {type} from "../util/type.js";
 
 export default function(opt){
     let _search="";
