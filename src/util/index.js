@@ -17,7 +17,7 @@ export default {
   * @param {number} time 时间秒
   * @return {string} 时分秒 '00:00:00'
   * */
-  formatTime: function (time) {
+  formatTime(time) {
     //小于10前面加'0'
     var t = function (num) {
       if (num < 10) {
@@ -49,7 +49,7 @@ export default {
    * @param {function} [onerror] 加载失败回调
    * @return {HTMLElement} script引用
    */
-  addScript: function (url, onload, onerror) {
+  addScript(url, onload, onerror) {
     var script = document.createElement('script');
     if (onload) {
       script.onload = function () {
