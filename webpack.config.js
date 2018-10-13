@@ -9,7 +9,7 @@ module.exports = {
         path: path.resolve(__dirname, 'lib'),
         filename: '[name].js',
         library: 'lab',
-        libraryTarget:'var'
+        libraryTarget:'umd'
     },
     module: {
         rules:[
