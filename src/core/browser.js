@@ -1,3 +1,5 @@
+let userAgent = window.navigator.userAgent
+
 /**
  * 获取浏览器信息
  * */
@@ -7,7 +9,7 @@ let find = function (needle) {
 
 export function getBrowser()
 {
-  var ua = window.navigator.userAgent.toLowerCase()
+  var ua = userAgent.toLowerCase()
   if (ua.indexOf('HUAWEI') > -1) return 'HUAWEI' // 华为手机浏览器
   if (ua.indexOf('amap') > -1) return 'amap' // 高德地图浏览器
   if (ua.indexOf('appsearch') > -1) return 'appsearch' // 百度手机助手
