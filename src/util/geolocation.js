@@ -1,3 +1,7 @@
+/**
+ * 浏览器获取经纬度
+ * */
+
 let longitude;
 let latitude;
 let options = {

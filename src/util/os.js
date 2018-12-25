@@ -1,7 +1,6 @@
 /**
  * 获取操作系统信息
  * */
-
 export function getOS()
 {
   var pf = window.navigator.platform

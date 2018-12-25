@@ -2,8 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        'lab':'./src/index.js',
-        'collection':'./src/index_collection.js'
+        'lab':'./src/index.js'
     },
     output: {
         path: path.resolve(__dirname, 'lib'),

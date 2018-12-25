@@ -1,11 +1,3 @@
-/**
- * Create by .
- * User: chuck
- * Date: 2018/11/16
- * Time: 11:53
- */
-
-// let href = window.location.href
 let search = window.location.search
 
 /**

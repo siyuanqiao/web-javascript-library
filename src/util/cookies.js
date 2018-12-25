@@ -24,14 +24,14 @@
  *
  * @param
  * setCookie("tasty","strawberry2");
- * setCookie("yummy","choco2",getData('s3'));
+ * setCookie("yummy","choco2",getDate('s3'));
  */
 function setCookie(name, value, expires, path, domain, secure) {
   document.cookie = name + "=" + escape(value) +
-    ((expires) ? "; expires=" + expires.toUTCString() : "") +
-    ((path) ? "; path=" + path : "") +
-    ((domain) ? "; domain=" + domain : "") +
-    ((secure) ? "; secure" : "");
+      ((expires) ? "; expires=" + expires.toUTCString() : "") +
+      ((path) ? "; path=" + path : "") +
+      ((domain) ? "; domain=" + domain : "") +
+      ((secure) ? "; secure" : "");
 }
 
 /**
@@ -75,9 +75,9 @@ function getCookie(name) {
 function deleteCookie(name, path, domain) {
   if (getCookie(name)) {
     document.cookie = name + "=" +
-      ((path) ? "; path=" + path : "") +
-      ((domain) ? "; domain=" + domain : "") +
-      "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+        ((path) ? "; path=" + path : "") +
+        ((domain) ? "; domain=" + domain : "") +
+        "; expires=Thu, 01-Jan-70 00:00:01 GMT";
   }
 }
 
@@ -86,7 +86,7 @@ function deleteCookie(name, path, domain) {
  * @param {string} str s1一秒 h1一小时 d1一天
  * @return {number} 当前时间+str的时间
  * */
-function getData(str) {
+function getDate(str) {
   var str1 = str.substring(0, 1);
   var str2 = str.substring(1, str.length) * 1;
   var time = 0;
@@ -104,7 +104,8 @@ function getData(str) {
 
 
 export {
+  getDate,
   setCookie,
   getCookie,
-  deleteCookie,
+  deleteCookie
 }
