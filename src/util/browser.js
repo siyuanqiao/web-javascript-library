@@ -7,9 +7,9 @@ function find(needle) {
   return ua.indexOf(needle) !== -1;
 }
 
-export function getBrowser()
+export default function getBrowser()
 {
-  if (find('HUAWEI')) return 'HUAWEI' // 华为手机浏览器
+  if (find('huawei')) return 'huawei' // 华为手机浏览器
   if (find('amap')) return 'amap' // 高德地图浏览器
   if (find('appsearch')) return 'appsearch' // 百度手机助手
   if (find('micromessenger')) return 'wechat'
