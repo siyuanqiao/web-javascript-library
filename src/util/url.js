@@ -24,8 +24,6 @@ export function parse() {
 
 /**
  * 获取URL参数
- * @example
- * LAB.URL.queryString();
  *
  * @retrun {}
  * */
