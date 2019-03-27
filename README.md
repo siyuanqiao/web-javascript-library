@@ -1,17 +1,9 @@
-# JavaScript 函数库
+# zepto.js源码学习
 
-## npm安装
+### 目的
+打造轻量级的针对现代高级浏览器的JavaScript库
 
-```
-npm install 180lab
-```
-
-## script引用
-```html
-<script src="./lib/lab.js"></script>
-```
-
-## 发布
-```
-npm run build
-```
+### 浏览器支持
+| Chorme | Safari 6+ |
+|---|---|
+| ✔ | ✔ |
