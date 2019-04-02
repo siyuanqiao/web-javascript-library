@@ -7,6 +7,7 @@ import {getDate,setCookie,getCookie,deleteCookie} from "./cookies";
 import {getOS} from "./os";
 import {getBrowser} from "./browser";
 import {addScript} from "./script";
+import {Math2} from "./Math2"
 
 export default {
   extend,
@@ -30,4 +31,5 @@ export default {
   getBrowser,
 
   addScript,
+  Math2
 };

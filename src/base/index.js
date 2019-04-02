@@ -4,4 +4,3 @@
 
 import './String'
 import './Array'
-import './Math'
