@@ -1,4 +1,4 @@
-# zepto.js源码学习
+# JavaScript 库
 
 ### 目的
 打造轻量级的针对现代高级浏览器的JavaScript库
