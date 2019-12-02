@@ -1,4 +1,4 @@
-import extend from '../util/extend.js';
+import extend from '../utils/extend.js';
 
 extend(String.prototype,{
     /**
