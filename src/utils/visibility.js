@@ -1,5 +1,4 @@
 /**
- * 监听页面显示或隐藏或切换(比如：页面隐藏，则暂停背景音乐播放。页面显示，则播放背景音乐）
  * @example window.addEventListener('hidden', function () {console.log('hidden')})
  * @example window.addEventListener('visible', function () {console.log('visible')})
  * */
