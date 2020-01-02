@@ -1,26 +1,23 @@
 {
-  "name": "bin",
+  "name": "web-js-lib",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "js 工具库（仅适用于浏览器）",
+  "main": "rollup.config.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "dev": "rollup --config rollup.config.dev.js",
+    "build": "rollup --config rollup.config.prod.js"
   },
-  "author": "",
+  "author": "abin",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.24.1",
-    "clean-webpack-plugin": "^1.0.1",
-    "html-webpack-plugin": "^3.2.0",
-    "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.1.14",
-    "webpack-merge": "^4.2.1"
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "rollup": "^1.27.8",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2"
   }
 }

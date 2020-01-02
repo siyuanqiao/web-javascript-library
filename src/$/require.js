@@ -1,13 +1,14 @@
-let toString = Object.prototype.toString;
-let class2type = {};
-"Boolean Number String Function Array Date RegExp Object".split(" ").forEach(function (name, i) {
-  class2type["[object " + name + "]"] = name.toLowerCase();
-});
+let toString = Object.prototype.toString
+let class2type = {}
+//eslint-disable-next-line
+'Boolean Number String Function Array Date RegExp Object'.split(' ').forEach(function (name, i) {
+  class2type['[object ' + name + ']'] = name.toLowerCase()
+})
 
 export function type(obj) {
   return obj == null
-      ? String(obj)
-      : class2type[toString.call(obj)] || "object";
+    ? String(obj)
+    : class2type[toString.call(obj)] || 'object'
 }
 
 export function isWindow(obj) {
@@ -27,9 +28,9 @@ export function isObject(obj) {
 }
 
 export function isFunction(value) {
-  return type(value) === 'function';
+  return type(value) === 'function'
 }
 
 export function isArray(value) {
-  return type(value) === 'array';
+  return type(value) === 'array'
 }

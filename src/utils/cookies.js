@@ -24,12 +24,12 @@
  * @example setCookie("tasty","strawberry2")
  * @example setCookie("yummy","choco2",getDate('s3'))
  */
-function setCookie (name, value, expires, path, domain, secure) {
+function setCookie(name, value, expires, path, domain, secure) {
   document.cookie = name + '=' + escape(value) +
-      ((expires) ? '; expires=' + expires.toUTCString() : '') +
-      ((path) ? '; path=' + path : '') +
-      ((domain) ? '; domain=' + domain : '') +
-      ((secure) ? '; secure' : '')
+    ((expires) ? '; expires=' + expires.toUTCString() : '') +
+    ((path) ? '; path=' + path : '') +
+    ((domain) ? '; domain=' + domain : '') +
+    ((secure) ? '; secure' : '')
 }
 
 /**
@@ -42,7 +42,7 @@ function setCookie (name, value, expires, path, domain, secure) {
  *
  * @example getCookie('tasty')
  */
-function getCookie (name) {
+function getCookie(name) {
   var dc = document.cookie
   var prefix = name + '='
   var begin = dc.indexOf('; ' + prefix)
@@ -68,22 +68,23 @@ function getCookie (name) {
  *
  * @example deleteCookie('tasty','/grou-purchase','.abobe.com');
  */
-function deleteCookie (name, path, domain) {
+function deleteCookie(name, path, domain) {
   if (getCookie(name)) {
     document.cookie = name + '=' +
-        ((path) ? '; path=' + path : '') +
-        ((domain) ? '; domain=' + domain : '') +
-        '; expires=Thu, 01-Jan-70 00:00:01 GMT'
+      ((path) ? '; path=' + path : '') +
+      ((domain) ? '; domain=' + domain : '') +
+      '; expires=Thu, 01-Jan-70 00:00:01 GMT'
   }
 }
 
 /**
  * 获取想要的时间
- * str s1一秒 h1一小时 d1一天
  * @example getDate('s30') 30s之后的时间
+ *
+ * @param str s1一秒 h1一小时 d1一天
  * @return {number} 当前时间+str的时间
  * */
-function getDate (str) {
+function getDate(str) {
   var str1 = str.substring(0, 1)
   var str2 = str.substring(1, str.length) * 1
   var time = 0

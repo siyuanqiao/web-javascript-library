@@ -1,118 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<title>stringutils</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-			}
-			
-			button {
-				display: block;
-				margin-bottom: .5em;
-				margin-left: .5em;
-				border: 0;
-				outline: 0;
-				background-color: red;
-				padding: 1em;
-				color: white;
-				float: left;
-			}
-			
-			input {
-				float: left;
-				padding: 1em;
-			}
-			
-			.clear {
-				clear: both;
-			}
-		</style>
-		<script src="../lib/string.js"></script>
-	</head>
+<head>
+  <meta charset="UTF-8">
+  <title>stringutils</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
 
-	<body>
-		<button onclick="trim()" id="btn_trim">去掉左右空格</button>
-		<div class="clear"></div>
-		<button onclick="getURLValue()" id="btn_trim">获取url上的参数值</button>
-		<div class="clear"></div>
-		<input id="inputStr" /><button onclick="empty()">判断是否为空字符</button>
-		<div class="clear"></div>
-		<input id="inputPhone" /><button onclick="phone()">判断是否为手机号</button>
-		<div class="clear"></div>
-		<input id="inputA" /><span style="float: left;">前补2个</span><input id="inputB" /><button onclick="leftPad()">在字符串前补2个字符</button>
-		<div class="clear"></div>
-		<input id="inputA2" /><span style="float: left;">第二个字符后插入</span><input id="inputB2" /><button onclick="insert()">在指定位置插入字符串</button>
-		<div class="clear"></div>
-		<input id="inputA3" /><span style="float: left;">删除第几个字符</span><input id="inputB3" /><button onclick="del()">删除指定位置的字符</button>
-		<div class="clear"></div>
-		<input id="inputEmail" /><button onclick="email()">判断是否为电子邮箱</button>
-		<div class="clear"></div>
-		<input id="inputID" /><button onclick="isId()">判断是否为身份证</button>
-		<div class="clear"></div>
+    button {
+      display: block;
+      margin-bottom: .5em;
+      margin-left: .5em;
+      border: 0;
+      outline: 0;
+      background-color: red;
+      padding: 1em;
+      color: white;
+      float: left;
+    }
 
-		<script>
-			function trim() {
-				var __str = '  去掉左右空格  ';
-				console.log('去掉前:::' + __str);
-				__str = __str.trim();
-				console.log('去掉后:::' + __str);
-			}
+    input {
+      float: left;
+      padding: 1em;
+    }
 
-			function empty() {
-				var __str = document.getElementById('inputStr').value;
-				var aa = __str.isEmpty();
-				if(aa == true) {
-					console.log('是空字符');
-				} else {
-					console.log('不是空字符');
-				}
-			}
+    .clear {
+      clear: both;
+    }
+  </style>
+  <script src="../dist/bin.js"></script>
+</head>
 
-			function phone() {
-				var __str = document.getElementById('inputPhone').value;
-				alert(__str.isMobile());
-			}
+<body>
+  <button onclick="trim()" id="btn_trim">去掉左右空格</button>
+  <div class="clear"></div>
+  <button onclick="getURLValue()" id="btn_trim">获取url上的参数值</button>
+  <div class="clear"></div>
+  <input id="inputStr"/>
+  <button onclick="empty()">判断是否为空字符</button>
+  <div class="clear"></div>
+  <input id="inputPhone"/>
+  <button onclick="phone()">判断是否为手机号</button>
+  <div class="clear"></div>
+  <input id="inputA"/><span style="float: left;">前补2个</span><input id="inputB"/>
+  <button onclick="leftPad()">在字符串前补2个字符</button>
+  <div class="clear"></div>
+  <input id="inputA2"/><span style="float: left;">第二个字符后插入</span><input id="inputB2"/>
+  <button onclick="insert()">在指定位置插入字符串</button>
+  <div class="clear"></div>
+  <input id="inputA3"/><span style="float: left;">删除第几个字符</span><input id="inputB3"/>
+  <button onclick="del()">删除指定位置的字符</button>
+  <div class="clear"></div>
+  <input id="inputEmail"/>
+  <button onclick="email()">判断是否为电子邮箱</button>
+  <div class="clear"></div>
+  <input id="inputID"/>
+  <button onclick="isId()">判断是否为身份证</button>
+  <div class="clear"></div>
 
-			function leftPad() {
-				var __str = document.getElementById('inputA').value;
-				var __str2 = document.getElementById('inputB').value;
-				var __str3 = stringUtil.leftpad(__str, 2, __str2);
-				alert(__str3);
-			}
+  <script>
+    function trim() {
+      var __str = '  去掉左右空格  '
+      console.log('去掉前:::' + __str)
+      __str = __str.trim()
+      console.log('去掉后:::' + __str)
+    }
 
-			function insert() {
-				var __str = document.getElementById('inputA2').value;
-				var __str2 = document.getElementById('inputB2').value;
-				var __str3 = __str.insert_flg(__str2, 2);
-				alert(__str3);
-			}
+    function empty() {
+      var __str = document.getElementById('inputStr').value
+      var aa = __str.isEmpty()
+      if (aa == true) {
+        console.log('是空字符')
+      } else {
+        console.log('不是空字符')
+      }
+    }
 
-			function del() {
-				var __str = document.getElementById('inputA3').value;
-				var __str2 = document.getElementById('inputB3').value;
-				var __str3 = __str.del_flg(__str2, 1);
-				alert(__str3);
-			}
+    function phone() {
+      var __str = document.getElementById('inputPhone').value
+      alert(__str.isMobile())
+    }
 
-			function getURLValue() {
-				var bb = window.location.search.getQuerystring();
-				console.log(bb);
-			}
-			
-			function email(){
-				var __str = document.getElementById('inputEmail').value;
-				alert(__str.isEmail());
-			}
-			
-			function isId(){
-				var __str = document.getElementById('inputID').value;
-				alert(__str.isID());
-			}
-		</script>
-	</body>
+    function leftPad() {
+      var __str = document.getElementById('inputA').value
+      var __str2 = document.getElementById('inputB').value
+      var __str3 = stringUtil.leftpad(__str, 2, __str2)
+      alert(__str3)
+    }
+
+    function insert() {
+      var __str = document.getElementById('inputA2').value
+      var __str2 = document.getElementById('inputB2').value
+      var __str3 = __str.insert_flg(__str2, 2)
+      alert(__str3)
+    }
+
+    function del() {
+      var __str = document.getElementById('inputA3').value
+      var __str2 = document.getElementById('inputB3').value
+      var __str3 = __str.del_flg(__str2, 1)
+      alert(__str3)
+    }
+
+    function getURLValue() {
+      var bb = window.location.search.getQuerystring()
+      console.log(bb)
+    }
+
+    function email() {
+      var __str = document.getElementById('inputEmail').value
+      alert(__str.isEmail())
+    }
+
+    function isId() {
+      var __str = document.getElementById('inputID').value
+      alert(__str.isID())
+    }
+  </script>
+</body>
 
 </html>
