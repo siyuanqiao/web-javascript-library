@@ -1,6 +1,8 @@
 import {type} from './type.js'
 
-// 为与源码的下标对应上，我们把第一个参数称为`第0个参数`，依次类推
+/**
+ * 为与源码的下标对应上，我们把第一个参数称为`第0个参数`，依次类推
+ * */
 export default function () {
   var options, name, src, copy, copyIsArray, clone,
     target = arguments[0] || {}, // 默认第0个参数为目标参数
