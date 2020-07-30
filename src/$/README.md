@@ -38,6 +38,19 @@ index([element]) => number
 当element DOM参数给出时，返回它在当前对象集合中的位置。  
 如果没有找到该元素，则返回-1。
 
+### 预计提供的方法
+
+index()  
+width()  
+height()  
+offset()  
+attr()  
+css()  
+addClass()  
+removeClass()  
+hasClass()  
+toggleClass()  
+
 ### 使用到ES5新特性
 getComputedStyle
 
