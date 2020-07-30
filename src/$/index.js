@@ -1,5 +1,4 @@
 import {type, isWindow, isDocument, isFunction, isObject, isArray} from './require'
-import {setAttribute} from './domapi'
 import {camelize, dasherize, maybeAddPx} from './utils'
 
 var document = window.document,
@@ -9,8 +8,6 @@ var document = window.document,
   emptyArr = [],
   filter = emptyArr.filter,
   slice = emptyArr.slice,
-  //eslint-disable-next-line
-  forEach = emptyArr.forEach,
   simpleSelectorRE = /^[\w-]*$/,
   fragmentRE = /^\s*<(\w+|!)[^>]*>/, //判断字符串是否为标签
   singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/, //判断是否为标签的形式（如<div></div>）
@@ -25,20 +22,20 @@ var document = window.document,
   }
 
 // 去除数组中重复出现的元素，返回新数组
-function uniq(array) {
+function uniq (array) {
   return filter.call(array, function (item, idx) {
     return array.indexOf(item) === idx
   })
 }
 
 // 过滤数组中值为null undefined的元素，返回新数组
-function compact(array) {
+function compact (array) {
   return filter.call(array, function (item) {
     return item != null
   })
 }
 
-function matches(element, selector) {
+function matches (element, selector) {
   if (!selector || !element || element.nodeType !== 1) return false
   // matches 方法用于检测元素( element )是否匹配特定的选择器( selector )
   var matchesSelector = element.matches || element.webkitMatchesSelector ||
@@ -58,16 +55,16 @@ function matches(element, selector) {
   return math
 }
 
-function filtered(nodes, selector) {
+function filtered (nodes, selector) {
   return (selector === null || !selector) ? $(nodes) : $(nodes).filter(selector)
 }
 
-function funcArg(context, arg, idx, payload) {
+function funcArg (context, arg, idx, payload) {
   return isFunction(arg) ? arg.call(context, idx, payload) : arg
 }
 
 // 判断是否为类数组
-function likeArray(obj) {
+function likeArray (obj) {
   var length = !!obj && 'length' in obj && obj.length
 
   // length === 0 其实就是将其看作为空数组
@@ -80,7 +77,7 @@ function likeArray(obj) {
 }
 
 //eslint-disable-next-line
-function fragment(html, name, properties) {
+function fragment (html, name, properties) {
   var dom, container
 
   // A special case optimization for a single tag
@@ -101,7 +98,11 @@ function fragment(html, name, properties) {
   return dom
 }
 
-function qsa(element, selector) {
+function setAttribute (node, name, value) {
+  value == null ? node.removeAttribute(name) : node.setAttribute(name, value)
+}
+
+function qsa (element, selector) {
   var found,
     maybeID = (selector[0] === '#'), // ID
     maybeClass = !maybeID && selector[0] === '.', // class
@@ -120,7 +121,7 @@ function qsa(element, selector) {
       )
 }
 
-function Bin(doms) {
+function Bin (doms) {
   var i = 0
   var len = doms ? doms.length : 0
   for (i; i < len; i++) {
@@ -264,7 +265,7 @@ Bin.prototype = {
   index: function (element) {
     return element ? this.indexOf(element) : this.parent().children().indexOf(this[0])
   },
-  hasClass(selector) {
+  hasClass (selector) {
     var rclass = /[\n\t\r]/g
     var className = ' ' + selector + ' '
 
@@ -298,7 +299,7 @@ Bin.prototype = {
       }
     })
   },
-  removeClass(value) {
+  removeClass (value) {
     var rspace = /\s+/
     var rclass = /[\n\t\r]/g
     var classNames,
@@ -345,7 +346,7 @@ Bin.prototype = {
   }
 }
 
-function $(selector, context) {
+function $ (selector, context) {
   var doms
   if (!selector) {
     return new Bin()
@@ -420,20 +421,23 @@ $.fn = Bin.prototype
 
 // Generate the `width` and `height` functions
 ;['width', 'height'].forEach(function (dimension) {
-  var dimensionProperty =
-    dimension.replace(/./, function (m) {
-      return m[0].toUpperCase()
-    })
+  var dimensionProperty = dimension.replace(/./, function (m) {
+    return m[0].toUpperCase()
+  })
 
   $.fn[dimension] = function (value) {
     var offset, el = this[0]
-    if (value === undefined) return isWindow(el) ? el['inner' + dimensionProperty] :
-      isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
-        (offset = this.offset()) && offset[dimension]
-    else return this.each(function (idx) {
-      el = $(this)
-      el.css(dimension, funcArg(this, value, idx, el[dimension]()))
-    })
+    if (value === undefined)
+      return isWindow(el)
+        ? el['inner' + dimensionProperty]
+        : isDocument(el)
+          ? el.documentElement['scroll' + dimensionProperty]
+          : (offset = this.offset()) && offset[dimension]
+    else
+      return this.each(function (idx) {
+        el = $(this)
+        el.css(dimension, funcArg(this, value, idx, el[dimension]()))
+      })
   }
 })
 
