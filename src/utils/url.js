@@ -1,13 +1,15 @@
 /**
- * 解析url（https://www.cnblogs.com/coco1s/p/5038412.html）
+ * 解析url
  * @param {String} url 需要解析的地址
  * @return {Object} 解析url后的对象
+ *
  * @example parseURL(window.location.href)
  * */
-function parseURL(url) {
+function parseURL (url) {
   var a = document.createElement('a');
   a.href = url;
   return {
+    origin: a.origin,
     source: url,
     protocol: a.protocol.replace(':', ''),
     host: a.hostname,
@@ -16,9 +18,13 @@ function parseURL(url) {
     params: (function () {
       var ret = {},
         seg = a.search.replace(/^\?/, '').split('&'),
-        len = seg.length, i = 0, s;
+        len = seg.length,
+        i = 0,
+        s;
       for (; i < len; i++) {
-        if (!seg[i]) { continue; }
+        if (!seg[i]) {
+          continue;
+        }
         s = seg[i].split('=');
         ret[s[0]] = s[1];
       }
@@ -41,7 +47,7 @@ function parseURL(url) {
  * @param {String} value 变量值
  * @return {String} 新的url
  * */
-function urlAddParam(url, name, value) {
+function urlAddParam (url, name, value) {
   // 分割url，arr[1] 为头部，arr[2]为参数，arr[3]为hash
   var arr = url.match(/([^\?#]*\??)([^#]*)?(#.*)?/)
   var prefix = arr[1]
