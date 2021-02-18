@@ -1,11 +1,8 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-button {
-  animation: 0;
-}
-
-@import "home";
+// 核心方法、变量、混合
+@import "variables";
+@import "functions";
+@import "mixins";
+// 结构化样式
+@import "stractural-styles/grid";
+// 功能样式
+@import "utility-styles/utility";

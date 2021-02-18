@@ -11,7 +11,9 @@ sass.compiler = require('node-sass');
 
 var paths = {
   styles: {
-    src: 'src/css/**/*.scss',
+    src: [
+      'src/css/index.scss'
+    ],
     dest: 'output/styles/'
   },
   scripts: {
