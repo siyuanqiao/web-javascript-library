@@ -3,7 +3,7 @@
  * @author https://github.com/xxcanghai/cnblogsFiles/blob/master/versionCompare/versionCompare.js
  * @param {string} v1 要进行比较的版本号1
  * @param {string} v2 要进行比较的版本号2
- * @returns
+ * @returns {number}
  */
 function versionCompare(v1, v2) {
   var GTR = 1 // 大于

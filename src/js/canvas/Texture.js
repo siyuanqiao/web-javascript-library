@@ -1,4 +1,8 @@
 (function (win, l) {
+
+  /**
+   * 纹理类
+   * */
   class Texture {
 
     constructor ($img) {
