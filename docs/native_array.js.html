@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: canvas/Texture.js</title>
+    <title>JSDoc: Source: native/array.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: canvas/Texture.js</h1>
+    <h1 class="page-title">Source: native/array.js</h1>
 
     
 
@@ -26,78 +26,42 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * 纹理类
- * */
-export class Texture {
+            <pre class="prettyprint source linenums"><code>(function () {
+  let proto = Array.prototype
 
-  constructor ($img) {
-    this._img = $img
-
-    this.canvas = document.createElement('canvas')
-    this.ctx = this.canvas.getContext('2d')
-
-    this.canvas.width = this.textureWidth
-    this.canvas.height = this.textureHeight
-
-    this.ctx.drawImage(this._img, 0, 0, this.textureWidth, this.textureHeight)
+  /**
+   * 洗牌算法 打乱数组
+   * @return 打乱后的数组
+   * */
+  proto.shuffle = function () {
+    var i, t, m = this.length
+    while (m) {
+      i = Math.floor(Math.random() * m--)
+      t = this[m]
+      this[m] = this[i]
+      this[i] = t
+    }
+    return this
   }
 
   /**
-   * 释放纹理
+   * 获取数组中的 最小值|最大值
+   * @param {string} str {'min'|'max'}
+   * @return 数组中的一个值
    * */
-  dispose () {
-
-  }
-
-  getPixel32 () {
-
-  }
-
-  /**
-   * 获取指定像素区域的颜色值
-   * */
-  getPixels (x, y, width, height) {
-    let imgData = this.ctx.getImageData(x, x, width, height)
-
-    let xyData = []
-    for (let i = 0; i &lt; height; i++) {
-      for (let j = 0; j &lt; width; j++) {
-        let _num = (i * width + j) * 4
-        let _red = imgData.data[_num + 0]
-        let _green = imgData.data[_num + 1]
-        let _blue = imgData.data[_num + 2]
-        let _alpha = imgData.data[_num + 3]
-        if (_alpha > 0) xyData.push({x: j, y: i, r: _red, g: _green, b: _blue, a: _alpha})
+  proto.getValue = function (str) {
+    var arr = this
+    var value = arr[0]
+    for (var i = 1; i &lt; arr.length; i++) {
+      if (str === 'min' &amp;&amp; value > arr[i]) {
+        value = arr[i]
+      } else if (str === 'max' &amp;&amp; value &lt; arr[i]) {
+        value = arr[i]
       }
     }
-    return xyData
+    return value
   }
-
-  /**
-   *  裁剪指定区域并保存成图片
-   * */
-  saveToFile () {
-
-  }
-
-  /**
-   * 转换成base64字符串，如果图片（或者包含的图片）跨域，则返回null
-   * */
-  toDataURL () {
-
-  }
-
-  get textureWidth () {
-    return this._img.width
-  }
-
-  get textureHeight () {
-    return this._img.height
-  }
-}
-
-</code></pre>
+}());</code></pre>
         </article>
     </section>
 

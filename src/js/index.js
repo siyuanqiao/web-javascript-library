@@ -1,6 +1,11 @@
-import {Util} from './util';
+export * from './util';
 
-import {Texture} from 'canvas/Texture'
+/**
+ * window.dm.util
+ * */
+const util = {}
+
+export {util}
 
 /**
  * b 方法
@@ -35,13 +40,3 @@ function addScript (url, onload, onerror) {
   return script;
 }
 
-
-/**
- * dm.util
- * */
-const util = new Util()
-
-/**
- * dm.Texture
- * */
-const Textur = Texture

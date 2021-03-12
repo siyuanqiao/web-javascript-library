@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: index.js</title>
+    <title>JSDoc: Source: Reg.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: index.js</h1>
+    <h1 class="page-title">Source: Reg.js</h1>
 
     
 
@@ -26,44 +26,42 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>export * from './util';
-
-/**
- * window.dm.util
+            <pre class="prettyprint source linenums"><code>/**
+ * Reg 类封装了常用的正则匹配
  * */
-const util = {}
+export class Reg {
 
-/**
- * b 方法
- * */
-function b () {
+  constructor () {
 
-}
-
-/**
- * 添加script.
- * @param {string} url js url
- * @param {function} [onload] 加载成功回调
- * @param {function} [onerror] 加载失败回调
- * @return {HTMLElement} script引用
- */
-function addScript (url, onload, onerror) {
-  var script = document.createElement('script');
-  if (onload) {
-    script.onload = function () {
-      onload(script);
-    };
+    /**
+     * cookie
+     * */
+    this.cookie = null;
   }
-  script.onerror = function () {
-    if (onerror) {
-      onerror(script);
-    } else if (onload) {
-      onload(script);
-    }
-  };
-  script.src = url;
-  document.head.appendChild(script);
-  return script;
+
+  /**
+   * 判断是否为手机号码
+   * */
+  isMobile (s) {
+    var p = /^0*(13|14|15|16|17|18)\d{9}$/;
+    return p.test(s);
+  }
+
+  /**
+   * 判断就否为电子邮箱
+   * */
+  isEmail (s) {
+    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    return myreg.test(s);
+  }
+
+  /**
+   * 判断是否为身份证
+   * */
+  isID (s) {
+    var myreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    return myreg.test(s);
+  }
 }
 
 </code></pre>
