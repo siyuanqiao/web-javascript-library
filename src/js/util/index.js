@@ -1,24 +1,18 @@
-(function (win, l) {
-  /**
-   * 工具类
-   * */
-  class Util {
-    constructor () {
-      /**
-       * cookie 操作对象
-       * */
-      this.cookie = null;
-    }
-  }
-
-  Util.prototype = {
+/**
+ * 工具类
+ * */
+export class Util {
+  constructor () {
     /**
-     * a 方法
+     * cookie 操作对象
      * */
-    a () {
-
-    }
+    this.cookie = null;
   }
 
-  l.util = new Util();
-}(window, window.l || {}));
+  /**
+   * a 方法
+   * */
+  a () {
+
+  }
+}
