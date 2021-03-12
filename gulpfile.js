@@ -22,6 +22,7 @@ var paths = {
       'src/js/util/index.js',
       'src/js/util/array.js',
       'src/js/util/string.js',
+      'src/js/util/cookies.js',
       'src/js/canvas/Texture.js',
     ],
     dest: 'output/scripts/'

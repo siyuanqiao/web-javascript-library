@@ -1,6 +1,7 @@
-(function (win, l) {
-  /**
-   * window.l 对象
-   * */
-  window.l = l || {};
-}(window))
+export * from 'util'
+export * from 'canvas/Texture'
+
+/**
+ * window.l 对象
+ * */
+window.l = l || {};

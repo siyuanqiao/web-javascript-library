@@ -1,12 +1,35 @@
 "use strict";
 
 (function (win, l) {
+  /**
+   * window.l 对象
+   * */
   window.l = l || {};
 })(window);
 "use strict";
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 (function (win, l) {
-  l.util = {};
+  /**
+   * 工具类
+   * */
+  var Util = function Util() {
+    _classCallCheck(this, Util);
+
+    /**
+     * cookie 操作对象
+     * */
+    this.cookie = null;
+  };
+
+  Util.prototype = {
+    /**
+     * a 方法
+     * */
+    a: function a() {}
+  };
+  l.util = new Util();
 })(window, window.l || {});
 "use strict";
 
@@ -208,6 +231,75 @@
 })();
 "use strict";
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+(function (win, l) {
+  var _l$cookie;
+
+  l.cookie = (_l$cookie = {
+    /**
+     * Sets a Cookie with the given name and value.
+     *
+     * name       Name of the cookie
+     * value      Value of the cookie
+     * [expires]  Expiration date of the cookie (default: end of current session)
+     * [path]     Path where the cookie is valid (default: path of calling document)
+     * [domain]   Domain where the cookie is valid
+     *              (default: domain of calling document)
+     * [secure]   Boolean value indicating if the cookie transmission requires a
+     *              secure transmission
+     *
+     * @example setCookie("tasty","strawberry2")
+     * @example setCookie("yummy","choco2",getDate('s3'))
+     */
+    setCookie: function setCookie(name, value, expires, path, domain, secure) {
+      document.cookie = name + '=' + escape(value) + (expires ? '; expires=' + expires.toUTCString() : '') + (path ? '; path=' + path : '') + (domain ? '; domain=' + domain : '') + (secure ? '; secure' : '');
+    }
+  }, _defineProperty(_l$cookie, "setCookie", function setCookie(name, value, expires, path, domain, secure) {
+    document.cookie = name + '=' + escape(value) + (expires ? '; expires=' + expires.toUTCString() : '') + (path ? '; path=' + path : '') + (domain ? '; domain=' + domain : '') + (secure ? '; secure' : '');
+  }), _defineProperty(_l$cookie, "getCookie", function getCookie(name) {
+    var dc = document.cookie;
+    var prefix = name + '=';
+    var begin = dc.indexOf('; ' + prefix);
+
+    if (begin === -1) {
+      begin = dc.indexOf(prefix);
+      if (begin !== 0) return null;
+    } else {
+      begin += 2;
+    }
+
+    var end = document.cookie.indexOf(';', begin);
+
+    if (end === -1) {
+      end = dc.length;
+    }
+
+    return unescape(dc.substring(begin + prefix.length, end));
+  }), _defineProperty(_l$cookie, "deleteCookie", function deleteCookie(name, path, domain) {
+    if (getCookie(name)) {
+      document.cookie = name + '=' + (path ? '; path=' + path : '') + (domain ? '; domain=' + domain : '') + '; expires=Thu, 01-Jan-70 00:00:01 GMT';
+    }
+  }), _defineProperty(_l$cookie, "getDate", function getDate(str) {
+    var str1 = str.substring(0, 1);
+    var str2 = str.substring(1, str.length) * 1;
+    var time = 0;
+
+    if (str1 === 's') {
+      time = str2 * 1000;
+    } else if (str1 === 'h') {
+      time = str2 * 60 * 60 * 1000;
+    } else if (str1 === 'd') {
+      time = str2 * 24 * 60 * 60 * 1000;
+    }
+
+    var data = new Date();
+    data.setTime(data.valueOf() + time);
+    return data;
+  }), _l$cookie);
+})(window, window.l || {});
+"use strict";
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -215,6 +307,9 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 (function (win, l) {
+  /**
+   * 纹理类
+   * */
   var Texture = /*#__PURE__*/function () {
     function Texture($img) {
       _classCallCheck(this, Texture);
