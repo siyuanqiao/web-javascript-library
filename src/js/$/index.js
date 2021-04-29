@@ -1,6 +1,49 @@
-import {type, isWindow, isDocument, isFunction, isObject, isArray} from './require'
-import {setAttribute} from './domapi'
-import {camelize, dasherize, maybeAddPx} from './utils'
+let cssNumber = {
+  'font-weight': 1,
+  'line-height': 1,
+  'opacity': 1,
+  'z-index': 1,
+  'zoom': 1
+}
+
+let toString = Object.prototype.toString
+let class2type = {}
+'Boolean Number String Function Array Date RegExp Object'.split(' ').forEach(name => (class2type['[object ' + name + ']'] = name.toLowerCase()))
+
+// 将 word-word 的形式的字符串转换成 wordWord 的形式， - 可以为一个或多个。
+export const camelize = (str) => {
+  return str.replace(/-+(.)?/g, function (match, chr) {
+    return chr ? chr.toUpperCase() : ''
+  })
+}
+
+// 将驼峰式的写法转换成连字符 - 的写法。
+export const dasherize = (str) => {
+  return str.replace(/::/g, '/')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+    .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+    .replace(/_/g, '-')
+    .toLowerCase()
+}
+
+// 数值是否添加单位
+export const maybeAddPx = (name, value) => ((typeof value === 'number' && !cssNumber[dasherize(name)]) ? value + 'px' : value)
+
+// 去除数组中重复出现的元素，返回新数组
+export const uniq = (array => array.filter((item, idx) => array.indexOf(item) === idx));
+
+// 过滤数组中值为null undefined的元素，返回新数组
+export const compact = (array => array.filter((item) => item != null));
+
+export const type = (obj) => (obj == null ? String(obj) : class2type[toString.call(obj)] || 'object')
+
+export const isWindow = (obj) => (obj != null && obj === obj.window)
+
+export const isDocument = (obj) => (obj != null && obj.nodeType == obj.DOCUMENT_NODE)
+
+export const isObject = (value) => (type(value) === 'object')
+
+export const isFunction = (value) => (type(value) === 'function')
 
 var document = window.document,
   docElem = document.documentElement,
@@ -9,8 +52,6 @@ var document = window.document,
   emptyArr = [],
   filter = emptyArr.filter,
   slice = emptyArr.slice,
-  //eslint-disable-next-line
-  forEach = emptyArr.forEach,
   simpleSelectorRE = /^[\w-]*$/,
   fragmentRE = /^\s*<(\w+|!)[^>]*>/, //判断字符串是否为标签
   singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/, //判断是否为标签的形式（如<div></div>）
@@ -24,21 +65,11 @@ var document = window.document,
     '*': document.createElement('div')
   }
 
-// 去除数组中重复出现的元素，返回新数组
-function uniq(array) {
-  return filter.call(array, function (item, idx) {
-    return array.indexOf(item) === idx
-  })
+function setAttribute (node, name, value) {
+  value == null ? node.removeAttribute(name) : node.setAttribute(name, value)
 }
 
-// 过滤数组中值为null undefined的元素，返回新数组
-function compact(array) {
-  return filter.call(array, function (item) {
-    return item != null
-  })
-}
-
-function matches(element, selector) {
+function matches (element, selector) {
   if (!selector || !element || element.nodeType !== 1) return false
   // matches 方法用于检测元素( element )是否匹配特定的选择器( selector )
   var matchesSelector = element.matches || element.webkitMatchesSelector ||
@@ -58,29 +89,16 @@ function matches(element, selector) {
   return math
 }
 
-function filtered(nodes, selector) {
+function filtered (nodes, selector) {
   return (selector === null || !selector) ? $(nodes) : $(nodes).filter(selector)
 }
 
-function funcArg(context, arg, idx, payload) {
+function funcArg (context, arg, idx, payload) {
   return isFunction(arg) ? arg.call(context, idx, payload) : arg
 }
 
-// 判断是否为类数组
-function likeArray(obj) {
-  var length = !!obj && 'length' in obj && obj.length
-
-  // length === 0 其实就是将其看作为空数组
-  // 最后一种情况必须要满足三个条件：
-  // 1.length 必须为数字
-  // 2.length 必须大于 0 ，表示有元素存在于类数组中
-  // 3.key length - 1 必须存在于 obj 中。我们都知道，数组最后的 index 值为 length -1 ，这里也是检查最后一个 key 是否存在。
-  return !isFunction(obj) && !isWindow(obj) &&
-    (isArray(obj) || length === 0 || (typeof length == 'number' && length > 0 && (length - 1) in obj))
-}
-
 //eslint-disable-next-line
-function fragment(html, name, properties) {
+function fragment (html, name, properties) {
   var dom, container
 
   // A special case optimization for a single tag
@@ -101,7 +119,7 @@ function fragment(html, name, properties) {
   return dom
 }
 
-function qsa(element, selector) {
+function qsa (element, selector) {
   var found,
     maybeID = (selector[0] === '#'), // ID
     maybeClass = !maybeID && selector[0] === '.', // class
@@ -120,7 +138,7 @@ function qsa(element, selector) {
       )
 }
 
-function Bin(doms) {
+function Bin (doms) {
   var i = 0
   var len = doms ? doms.length : 0
   for (i; i < len; i++) {
@@ -129,39 +147,30 @@ function Bin(doms) {
   this.length = len
 }
 
-// 定义$对象的原型对象
 Bin.prototype = {
   constructor: Bin,
   indexOf: emptyArr.indexOf,
-  method: function () {
-    return this
-  },
   each: function (callback) {
     emptyArr.every.call(this, function (el, idx) {
       return callback.call(el, idx, el) !== false
     })
     return this
   },
-  pluck: function (property) {
-    return $.map(this, function (ele) {
-      return ele[property]
-    })
+  index: function (element) {
+    return element ? this.indexOf(element) : this.parent().children().indexOf(this[0])
   },
-  map: function (fn) {
-    return $($.map(this, function (el, i) {
-      return fn.call(el, el, i)
-    }))
-  },
-  slice: function () {
-    // arguments是类数组，此处用调用slice方法需要使用apply
-    return $(slice.apply(this, arguments))
-  },
+  // 筛选
   eq: function (idx) {
     return idx === -1 ? this.slice(-1) : this.slice(idx, idx + 1)
   },
   filter: function (selector) {
     return $(filter.call(this, function (element) {
       return matches(element, selector)
+    }))
+  },
+  map: function (fn) {
+    return $($.map(this, function (el, i) {
+      return fn.call(el, el, i)
     }))
   },
   not: function (selector) {
@@ -175,8 +184,9 @@ Bin.prototype = {
 
     return $(nodes)
   },
-  parent: function (selector) {
-    return filtered(uniq(this.pluck('parentNode')), selector)
+  slice: function () {
+    // arguments是类数组，此处用调用slice方法需要使用apply
+    return $(slice.apply(this, arguments))
   },
   children: function (selector) {
     return filtered(this.map(function (element) {
@@ -185,6 +195,10 @@ Bin.prototype = {
       })
     }), selector)
   },
+  parent: function (selector) {
+    return filtered(uniq(this.pluck('parentNode')), selector)
+  },
+  // 属性
   attr: function (name, value) {
     var result
     return (typeof name == 'string' && !(1 in arguments))
@@ -200,71 +214,7 @@ Bin.prototype = {
           setAttribute(this, name, value)
       })
   },
-  offset: function () {
-    if (!this.length) return null
-
-    if (docElem !== this[0] && !$.contains(docElem, this[0])) return {top: 0, left: 0}
-
-    var obj = this[0].getBoundingClientRect()
-    var clientTop = docElem.clientTop || body.clientTop || 0,
-      clientLeft = docElem.clientLeft || body.clientLeft || 0,
-      scrollTop = window.pageYOffset && docElem.scrollTop || body.scrollTop,
-      scrollLeft = window.pageXOffset && docElem.scrollLeft || body.scrollLeft,
-      left = obj.left + scrollLeft - clientLeft,
-      top = obj.top + scrollTop - clientTop
-
-    return {
-      left: left,
-      top: top,
-      width: obj.width,
-      height: obj.height
-    }
-  },
-  css: function (property, value) {
-    // 一个参数，{strig | array}获取属性
-    if (arguments.length < 2) {
-      var element = this[0]
-      if (!element) return
-
-      if (typeof property === 'string') {
-        return element.style[camelize(property)] || getComputedStyle(element, '').getPropertyValue(property)
-      } else if (isArray(property)) {
-        var props = {}
-        var styleDeclaration = getComputedStyle(element, '')
-        $.each(property, function (idx, prop) {
-          props[prop] = element.style[camelize(prop)] || styleDeclaration.getPropertyValue(prop)
-        })
-        return props
-      }
-    }
-
-    //设置属性
-    var css = ''
-    if (type(property) === 'string') {
-      if (!value && value !== 0)
-        this.each(function () {
-          this.style.removeProperty(dasherize(value))
-        })
-      else
-        css = dasherize(property) + ':' + maybeAddPx(property, value)
-    } else {
-      for (var key in property)
-        if (!property[key] && property[key] !== 0)
-          this.each(function () {
-            this.style.removeProperty(dasherize(key))
-          })
-        else
-          css += dasherize(key) + ':' + maybeAddPx(key, property[key]) + ';'
-    }
-
-    return this.each(function () {
-      this.style.cssText += ';' + css
-    })
-  },
-  index: function (element) {
-    return element ? this.indexOf(element) : this.parent().children().indexOf(this[0])
-  },
-  hasClass(selector) {
+  hasClass (selector) {
     var rclass = /[\n\t\r]/g
     var className = ' ' + selector + ' '
 
@@ -298,7 +248,7 @@ Bin.prototype = {
       }
     })
   },
-  removeClass(value) {
+  removeClass (value) {
     var rspace = /\s+/
     var rclass = /[\n\t\r]/g
     var classNames,
@@ -342,30 +292,92 @@ Bin.prototype = {
           : $this.addClass(className)
       }
     })
-  }
+  },
+  // CSS
+  css: function (property, value) {
+    // 一个参数，{strig | array}获取属性
+    if (arguments.length < 2) {
+      var element = this[0]
+      if (!element) return
+
+      if (typeof property === 'string') {
+        return element.style[camelize(property)] || getComputedStyle(element, '').getPropertyValue(property)
+      } else if (Array.isArray(property)) {
+        var props = {}
+        var styleDeclaration = getComputedStyle(element, '')
+        $.each(property, function (idx, prop) {
+          props[prop] = element.style[camelize(prop)] || styleDeclaration.getPropertyValue(prop)
+        })
+        return props
+      }
+    }
+
+    //设置属性
+    var css = ''
+    if (type(property) === 'string') {
+      if (!value && value !== 0)
+        this.each(function () {
+          this.style.removeProperty(dasherize(value))
+        })
+      else
+        css = dasherize(property) + ':' + maybeAddPx(property, value)
+    } else {
+      for (var key in property)
+        if (!property[key] && property[key] !== 0)
+          this.each(function () {
+            this.style.removeProperty(dasherize(key))
+          })
+        else
+          css += dasherize(key) + ':' + maybeAddPx(key, property[key]) + ';'
+    }
+
+    return this.each(function () {
+      this.style.cssText += ';' + css
+    })
+  },
+  offset: function () {
+    if (!this.length) return null
+
+    if (docElem !== this[0] && !$.contains(docElem, this[0])) return {top: 0, left: 0}
+
+    var obj = this[0].getBoundingClientRect()
+    var clientTop = docElem.clientTop || body.clientTop || 0,
+      clientLeft = docElem.clientLeft || body.clientLeft || 0,
+      scrollTop = window.pageYOffset && docElem.scrollTop || body.scrollTop,
+      scrollLeft = window.pageXOffset && docElem.scrollLeft || body.scrollLeft,
+      left = obj.left + scrollLeft - clientLeft,
+      top = obj.top + scrollTop - clientTop
+
+    return {
+      left: left,
+      top: top,
+      width: obj.width,
+      height: obj.height
+    }
+  },
 }
 
-function $(selector, context) {
+function $ (selector, context) {
   var doms
   if (!selector) {
     return new Bin()
-  } else if (typeof selector === 'string') { // html标签文本，选择器
+  } else if (typeof selector === 'string') { // 选择器或HTML标签文本
     selector = selector.trim()
 
     if (selector[0] === '<' && fragmentRE.test(selector)) {
       doms = fragment(selector, RegExp.$1, context)
       selector = null
     } else if (context !== undefined) {
-      return '$(context).find(selector)'
+      return new Error('$(context).find(selector) 待实现！')
     } else {
       doms = qsa(document, selector)
     }
   } else if (isFunction(selector)) { // 方法
-    return '$(document).ready(selector)'
+    return new Error('$(function(){ }) 待实现！')
   } else if (selector instanceof Bin) { // $对象
     return selector
   } else {
-    if (isArray(selector)) {// 数组
+    if (Array.isArray(selector)) {// 数组
       doms = compact(selector)
     } else if (isObject(selector)) {// 纯对象 {}
       doms = [selector]
@@ -406,30 +418,27 @@ $.each = function (elements, callback) {
   return elements
 }
 
-$.contains = document.documentElement.contains ?
-  function (parent, node) {
-    return parent !== node && parent.contains(node)
-  } :
-  function (parent, node) {
+$.contains = document.documentElement.contains
+  ? (function (parent, node) {return parent !== node && parent.contains(node)})
+  : (function (parent, node) {
     while (node && (node = node.parentNode))
       if (node === parent) return true
     return false
-  }
+  })
 
-$.fn = Bin.prototype
+$.fn = Bin.prototype;
 
-// Generate the `width` and `height` functions
-;['width', 'height'].forEach(function (dimension) {
-  var dimensionProperty =
-    dimension.replace(/./, function (m) {
-      return m[0].toUpperCase()
-    })
+['width', 'height'].forEach(function (dimension) {
+  var dimensionProperty = dimension.replace(/./, m => m[0].toUpperCase())
 
   $.fn[dimension] = function (value) {
     var offset, el = this[0]
-    if (value === undefined) return isWindow(el) ? el['inner' + dimensionProperty] :
-      isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
-        (offset = this.offset()) && offset[dimension]
+    if (value === undefined)
+      return isWindow(el)
+        ? el['inner' + dimensionProperty]
+        : isDocument(el)
+          ? el.documentElement['scroll' + dimensionProperty]
+          : (offset = this.offset()) && offset[dimension]
     else return this.each(function (idx) {
       el = $(this)
       el.css(dimension, funcArg(this, value, idx, el[dimension]()))
